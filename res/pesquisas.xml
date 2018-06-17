@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<list>
+  <Pesquisa>
+    <titulo>Marcas De Celular - Sistemas De Informcao 2018.1</titulo>
+    <nome>Marcas</nome>
+    <tipo>0</tipo>
+    <indice>0</indice>
+    <tipos>
+      <tipo>LG</tipo>
+      <tipo>IPhone</tipo>
+      <tipo>Samsung</tipo>
+      <tipo>Motorola</tipo>
+      <tipo>ASUS</tipo>
+      <tipo>BLU</tipo>
+      <tipo>Lenovo</tipo>
+      <tipo>Sony</tipo>
+      <tipo>Outros</tipo>
+    </tipos>
+    <entidades>
+      <Entidade>
+        <nome>Mael</nome>
+        <dado>LG</dado>
+        <indice>0</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Teste</nome>
+        <dado>LG</dado>
+        <indice>2</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Sei la</nome>
+        <dado>IPhone</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Ayrton</nome>
+        <dado>Motorola</dado>
+        <indice>4</indice>
+      </Entidade>
+    </entidades>
+  </Pesquisa>
+  <Pesquisa>
+    <titulo>Testes dos testes testados</titulo>
+    <nome>Teste</nome>
+    <tipo>0</tipo>
+    <indice>1</indice>
+    <tipos>
+      <tipo>Teste</tipo>
+      <tipo>Testado</tipo>
+      <tipo>Testando</tipo>
+    </tipos>
+    <entidades>
+      <Entidade>
+        <nome>Mael</nome>
+        <dado>Teste</dado>
+        <indice>2</indice>
+      </Entidade>
+    </entidades>
+  </Pesquisa>
+  <Pesquisa>
+    <titulo>Velocidade Internet</titulo>
+    <nome>Ping</nome>
+    <tipo>1</tipo>
+    <indice>2</indice>
+    <tipos>
+      <tipo/>
+      <tipo/>
+      <tipo/>
+      <tipo/></tipos>
+    <entidades>
+      <Entidade>
+        <nome/>
+        <dado>10</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>20</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[3]"/>
+      <Entidade>
+        <nome/>
+        <dado>4</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[5]"/>
+      <Entidade>
+        <nome/>
+        <dado>3</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[7]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[9]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[11]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[13]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[15]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[17]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[19]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[21]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[23]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[25]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[27]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[29]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[31]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[33]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[35]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[37]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[39]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[41]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[43]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[45]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[47]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade reference="../Entidade[49]"/>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>9</dado>
+        <indice>3</indice>
+      </Entidade>
+    </entidades>
+  </Pesquisa>
+</list>

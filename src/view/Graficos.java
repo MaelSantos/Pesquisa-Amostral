@@ -27,10 +27,11 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.TextAnchor;
 
-import model.BancoDeDados;
+import model.Dados;
 import model.Entidade;
 
 public class Graficos extends PanelGenerico {
+
 
 	private JComboBox<String> cbxGraficos;
 	private JFreeChart fctPizza, fctColunas, fctBarras, fctPolar;
@@ -42,16 +43,22 @@ public class Graficos extends PanelGenerico {
 	private String titulo = "Marcas De Celular";
 	double salto;
 	
+	public Graficos() {
+		super("Graficos");
+		// TODO Stub de construtor gerado automaticamente
+	}
+	
 	@SuppressWarnings("serial")
 	@Override
 	public void inicializar() {
 		 
-		salto = ((double)360/BancoDeDados.entidades.size());
+		lblTitulo = new JLabel(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo());
+		salto = ((double)360/Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size());
 		
 		dtsPie = new DefaultPieDataset();
 		dtsCategory = new DefaultCategoryDataset();
 		xySeries = new XYSeriesCollection();
-		atualizarDados();
+		atualizar();
 	
 		ValueAxis radiusAxis = new NumberAxis();
 		radiusAxis.setTickLabelsVisible(true);
@@ -66,12 +73,12 @@ public class Graficos extends PanelGenerico {
 				
 				List<NumberTick> ticks = new ArrayList<NumberTick>(); 
 				
-				for(int i = 0; i < BancoDeDados.marcasNomes.length; i++)
+				for(int i = 0; i < Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().size(); i++)
 				{
-					if(i < BancoDeDados.marcasNomes.length/2)
+					if(i < Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().size()/2)
 					{
 						ticks.add(new NumberTick(i*salto, 
-								BancoDeDados.marcasNomes[i], 
+								Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i), 
 								TextAnchor.BASELINE_LEFT, 
 								TextAnchor.TOP_CENTER,
 								0.0));
@@ -79,7 +86,7 @@ public class Graficos extends PanelGenerico {
 					else
 					{
 						ticks.add(new NumberTick(i*salto, 
-								BancoDeDados.marcasNomes[i], 
+								Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i), 
 								TextAnchor.TOP_RIGHT, 
 								TextAnchor.TOP_CENTER,
 								0.0));						
@@ -123,7 +130,6 @@ public class Graficos extends PanelGenerico {
 				450, 450, 
 				true, true, true, true, true, false);
 		
-		lblTitulo = new JLabel(BancoDeDados.titulo);
 		
 		String[] nomes = {"Coluna", "Barras", "Pizza", "Polar"};
 		cbxGraficos = new JComboBox<String>(nomes);
@@ -165,31 +171,37 @@ public class Graficos extends PanelGenerico {
 		
 	}
 
-	public void atualizarDados()
+	public void atualizar()
 	{
-		double total = BancoDeDados.entidades.size();
+		lblTitulo.setText(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo());
+		
+		xySeries.removeAllSeries();
+		dtsCategory.clear();
+		dtsPie.clear();
+		
+		double total = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size();
 		double porcent = 0;
 			
 		ArrayList<String> ocorrencias = new ArrayList<String>();
-		for(Entidade e: BancoDeDados.entidades)
-			ocorrencias.add(e.getMarca());
+		for(Entidade e: Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())
+			ocorrencias.add(e.getDado());
 			
 		//Adiciona os dados ao dataSet deve somar um total de 100%
-		for (int i = 0; i < BancoDeDados.marcasNomes.length; i++)
+		for (int i = 0; i < Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().size(); i++)
         {
-			XYSeries series = new XYSeries(BancoDeDados.marcasNomes[i]);
+			XYSeries series = new XYSeries(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i));
 			
             int quant = Collections.frequency(ocorrencias, 
-            		BancoDeDados.marcasNomes[i]);
-            System.out.println(BancoDeDados.marcasNomes[i]+" recebeu "+ quant+"votos ");
+            		Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i));
+            System.out.println(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i)+" recebeu "+ quant+"votos ");
             porcent = (quant*100)/total;
             
-			dtsPie.setValue(BancoDeDados.marcasNomes[i], porcent);
+			dtsPie.setValue(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i), porcent);
 			dtsCategory.setValue(quant, 
-					BancoDeDados.marcasNomes[i], 
-					BancoDeDados.marcasNomes[i]);
+					Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i), 
+					Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i));
 			
-			if(i+1 >= BancoDeDados.marcasNomes.length)
+			if(i+1 >= Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().size())
 			{
 				series.add(i*salto, quant);
 				series.add(0, 0);
@@ -198,7 +210,7 @@ public class Graficos extends PanelGenerico {
 			else
 			{
 				int prox = Collections.frequency(ocorrencias, 
-	            		BancoDeDados.marcasNomes[i+1]);
+						Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i+1));
 				series.add(i*salto, quant);
 				series.add((i+1)*salto, prox);
 				series.add(0, 0);

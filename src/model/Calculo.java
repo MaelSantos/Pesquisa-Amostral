@@ -11,20 +11,27 @@ public class Calculo {
 	
 	public static String media()
 	{
-		double total = BancoDeDados.entidades.size();
-		double quant = BancoDeDados.marcasNomes.length;
+		double total = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size();
+		double quant = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().size();
 		
 		double media = total/quant;
 		
 		return media+"";
 	}
 	
-	public static String media(ArrayList<Double> list)
+	public static String media(ArrayList<Entidade> list)
 	{
-		double total = list.size();
+		
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
+		double total = num.size();
 		double quant = 0;
 		
-		for(double d : list)
+		for(double d : num)
 			quant += d;
 		
 		double media = quant/total;
@@ -39,13 +46,13 @@ public class Calculo {
 		int quant = 0;
 		
 		int i = 0;
-		for(String s: BancoDeDados.marcasNomes)
+		for(String s: Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos())
 		{
 			quant = 0;
 			i = 0;
-			while(i < BancoDeDados.entidades.size())
+			while(i < Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size())
 			{
-				String nome = BancoDeDados.entidades.get(i).getMarca();
+				String nome = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().get(i).getDado();
 				if(s.equalsIgnoreCase(nome))
 					quant++;
 				i++;
@@ -64,20 +71,26 @@ public class Calculo {
 		return moda;
 	}
 	
-	public static String moda(ArrayList<Double> list)
+	public static String moda(ArrayList<Entidade> list)
 	{
 		String moda = "";
 		int mo = 0;
 		int quant = 0;
 		
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
 		int i = 0;
-		for(double d : list)
+		for(double d : num)
 		{
 			quant = 0;
 			i = 0;
 			while(i < list.size())
 			{
-				double valor = list.get(i);
+				double valor = num.get(i);
 				if(d == valor)
 					quant++;
 				i++;
@@ -103,39 +116,46 @@ public class Calculo {
 	{
 		ArrayList<String> nomes = new ArrayList<String>();
 		
-		for(Entidade e : BancoDeDados.entidades)//percorro a populaçao
-				nomes.add(e.getMarca());//add todos as marcas de minha populaçao
+		for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())//percorro a populaçao
+				nomes.add(e.getDado());//add todos as marcas de minha populaçao
 		
 		organizarLista(nomes, -1);
 		
 		int mediana = 0;
-		mediana = BancoDeDados.entidades.size()/2;
+		mediana = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/2;
 
-		if(BancoDeDados.entidades.size() %2 == 0)
-			if(! (nomes.get(mediana-1).equalsIgnoreCase(nomes.get(mediana))) )
-				return nomes.get(mediana-1) +" e "+ nomes.get(mediana);
-			else
-				return nomes.get(mediana-1);
-		else
-			return nomes.get(mediana);
+//		if(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size() %2 == 0)
+//			if(! (nomes.get(mediana-1).equalsIgnoreCase(nomes.get(mediana))) )
+//				return nomes.get(mediana-1) +" e "+ nomes.get(mediana);
+//			else
+//				return nomes.get(mediana-1);
+//		else
+//			return nomes.get(mediana);
+		return "";
 	}
 	
-	public static String mediana(ArrayList<Double> list)
+	public static String mediana(ArrayList<Entidade> list)
 	{
-		Collections.sort(list);
+//		Collections.sort(list);
+		
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
 		
 		int mediana = 0;
-		mediana = BancoDeDados.entidades.size()/2;
+		mediana = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/2;
 		
 		if(list.size() %2 == 0)
-			if(! (list.get(mediana-1) == (list.get(mediana))) )
+			if(! (num.get(mediana-1) == (num.get(mediana))) )
 			{
-				return ((list.get(mediana-1) + list.get(mediana))/2)+"";				
+				return ((num.get(mediana-1) + num.get(mediana))/2)+"";				
 			}
 			else
-				return list.get(mediana-1)+"";
+				return num.get(mediana-1)+"";
 		else
-			return list.get(mediana)+"";
+			return num.get(mediana)+"";
 	}
 	
 	public static void organizarLista(List<String> marcasN, int org)
@@ -149,46 +169,52 @@ public class Calculo {
 		ArrayList<String> temp = new ArrayList<String>();
 		ArrayList<String> nomes = new ArrayList<String>();
 		
-		for(Entidade e : BancoDeDados.entidades)//percorro a populaçao
-				temp.add(e.getMarca());//add todos as marcas de minha populaçao
+		for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())//percorro a populaçao
+				temp.add(e.getDado());//add todos as marcas de minha populaçao
 		
 		organizarLista(temp, -1);
 		
-		int inicio = (int) Math.round( ( (double)(BancoDeDados.entidades.size()/4)) ); 
+		int inicio = (int) Math.round( ( (double)(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/4)) ); 
 		int quartil = inicio;
 
-		for(int i = 0; i < temp.size(); i++)
-		{
-			if(temp.get(quartil-1) != null)
-			{
-				nomes.add(temp.get(quartil-1));			
-				quartil += inicio;
-			}
-			if(quartil > temp.size())
-				break;
-		}
+//		for(int i = 0; i < temp.size(); i++)
+//		{
+//			if(temp.get(quartil-1) != null)
+//			{
+//				nomes.add(temp.get(quartil-1));			
+//				quartil += inicio;
+//			}
+//			if(quartil > temp.size())
+//				break;
+//		}
 			return nomes;
 	}
 
-	public static ArrayList<String> quartil(ArrayList<Double> list)
+	public static ArrayList<String> quartil(ArrayList<Entidade> list)
 	{
 		ArrayList<String> temp = new ArrayList<String>();
-		
-		Collections.sort(list);
 	
-		int inicio = (int) Math.round( ( (double)(list.size()/4)) ); 
+//		Collections.sort(list);
+	
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
+		int inicio = (int) Math.round( ( (double)(num.size()/4)) ); 
 		int quartil = inicio;
 		
-		for(int i = 0; i < list.size(); i++)
-		{
-			if(list.get(quartil-1) != null)
-			{
-				temp.add(list.get(quartil-1)+"");
-				quartil += inicio;
-			}
-			if(quartil > list.size())
-				break;
-		}
+//		for(int i = 0; i < num.size(); i++)
+//		{
+//			if(num.get(quartil-1) != null)
+//			{
+//				temp.add(num.get(quartil-1)+"");
+//				quartil += inicio;
+//			}
+//			if(quartil > num.size())
+//				break;
+//		}
 			return temp;
 	}
 	
@@ -196,29 +222,32 @@ public class Calculo {
 	{
 		ArrayList<String> nomes = new ArrayList<String>();
 		
-		for(Entidade e : BancoDeDados.entidades)//percorro a populaçao
-				nomes.add(e.getMarca());//add todos as marcas de minha populaçao
+		for(Entidade e :Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())//percorro a populaçao
+				nomes.add(e.getDado());//add todos as marcas de minha populaçao
 		
 		organizarLista(nomes, -1);
-		double p1 = ((double)(BancoDeDados.entidades.size()/100)); 
+		double p1 = ((double)(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/100)); 
 		double p = ((double)(p1 * percentil));
-//		System.out.println(percentil);
-//		System.out.println(p1);
-//		System.out.println(p);
-//		System.out.println(nomes);
-		
-		return nomes.get(0);
+
+//		return nomes.get(0);
+		return "";
 	}
 
-	public static String percentil(ArrayList<Double> list, int percentil)
+	public static String percentil(ArrayList<Entidade> list, int percentil)
 	{
 		ArrayList<String> nomes = new ArrayList<String>();
 		
-		for(Entidade e : BancoDeDados.entidades)//percorro a populaçao
-				nomes.add(e.getMarca());//add todos as marcas de minha populaçao
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
+		for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())//percorro a populaçao
+				nomes.add(e.getDado());//add todos as marcas de minha populaçao
 		
 		organizarLista(nomes, -1);
-		double p1 = ((double)(BancoDeDados.entidades.size()/100)); 
+		double p1 = ((double)(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/100)); 
 		double p = ((double)(p1 * percentil));
 //		System.out.println(percentil);
 //		System.out.println(p1);
@@ -240,13 +269,13 @@ public class Calculo {
 		public int compare(String a, String b) {
 			
 			int quantA = 0;
-			for(Entidade e : BancoDeDados.entidades)
-				if(e.getMarca().equalsIgnoreCase(a))
+			for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())
+				if(e.getDado().equalsIgnoreCase(a))
 					quantA += 1;
 
 			int quantB = 0;
-			for(Entidade e : BancoDeDados.entidades)
-				if(e.getMarca().equalsIgnoreCase(b))
+			for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())
+				if(e.getDado().equalsIgnoreCase(b))
 					quantB += 1;
 			
 			if (quantA > quantB) {
@@ -269,24 +298,36 @@ public class Calculo {
 	}
 	
 
-	public static double maior(ArrayList<Double> list)
+	public static double maior(ArrayList<Entidade> list)
 	{
 		double maior = 0;
 		
-		for(double d : list)
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
+		for(double d : num)
 		{
 			if(d > maior)
-				maior = d;
+				maior = d;			
 		}
 		
 		return maior;	
 	}
 	
-	public static double menor(ArrayList<Double> list)
+	public static double menor(ArrayList<Entidade> list)
 	{
-		double menor = list.get(0);
 		
-		for(double d : list)
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
+		double menor = num.get(0);
+		for(double d : num)
 		{
 			if(d < menor)
 				menor = d;
@@ -295,21 +336,33 @@ public class Calculo {
 		return menor;
 	}
 	
-	public static double total(ArrayList<Double> list)
+	public static double total(ArrayList<Entidade> list)
 	{
 		double valor = 0;
 		
-		for(double d : list)
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
+		for(double d : num)
 			valor += d;
 		
 		return valor;
 	}
 	
-	public static int classes(ArrayList<Double> list)
+	public static int classes(ArrayList<Entidade> list)
 	{
 		double classes = 0;
 		
-		classes = ((double) (1 +3.33*Math.log10((double)list.size())));
+		ArrayList<Double> num = new ArrayList<Double>();
+		for(Entidade e : list)
+		{
+			num.add(Double.parseDouble(e.getDado()));
+		}
+		
+		classes = ((double) (1 +3.33*Math.log10((double)num.size())));
 		
 		double diferenca = maior(list)-menor(list);
 		
@@ -319,7 +372,7 @@ public class Calculo {
 		
 	}
 	
-	public static ArrayList<Integer> minmax(ArrayList<Double> list)
+	public static ArrayList<Integer> minmax(ArrayList<Entidade> list)
 	{
 		int classe = classes(list);
 		int min = 0;
@@ -342,9 +395,5 @@ public class Calculo {
 		
 	}
 	
-	public static void main(String[] args) {
-		
-		System.out.println("min max = "+minmax(BancoDeDados.valores));
-	}
-	
+
 }

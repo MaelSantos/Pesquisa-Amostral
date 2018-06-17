@@ -15,23 +15,27 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
 
-import model.BancoDeDados;
+import model.Dados;
+import model.Entidade;
 import model.Calculo;
 
 public class Histograma extends PanelGenerico{
+
 
 	private JFreeChart histograma;
 	private ChartPanel panel;
 	private HistogramDataset dataset;
 
+	public Histograma() {
+		super("Histograma");
+		// TODO Stub de construtor gerado automaticamente
+	}
+	
 	@Override
 	public void inicializar() {
 		
 		dataset = new HistogramDataset();
-//		dataset.setType(HistogramType.FREQUENCY);
-		
-		atualizarDados();
-		
+
 		histograma = ChartFactory.createHistogram(
 				"Dados Qualitativos", 
 				"Classes",
@@ -41,14 +45,7 @@ public class Histograma extends PanelGenerico{
 				true, 
 				true, 
 				true);
-		
-//		NumberAxis axis = new NumberAxis();
-//		ValueAxis range = new NumberAxis();
-//		XYItemRenderer renderer = new DefaultXYItemRenderer();
-//		
-//		XYPlot hi = new XYPlot(dataset, axis, range, renderer);
-//		histograma = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, hi, false);
-		
+				
 		panel = new ChartPanel(histograma);
 		panel.setPreferredSize(new Dimension(550, 400));
 		panel.setRangeZoomable(false);
@@ -56,14 +53,20 @@ public class Histograma extends PanelGenerico{
 		
 	}
 
-	public void atualizarDados()
+	public void atualizar()
 	{
-		ArrayList<Integer> num = Calculo.minmax(BancoDeDados.valores);	
+		ArrayList<Integer> num = Calculo.minmax(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());	
 		ArrayList<Double> temp = new ArrayList<Double>();
 		
 		int min = 0;
 		int max = 0;
 		double soma;
+		
+		ArrayList<Double> n = new  ArrayList<Double>();
+		for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())
+			n.add(Double.parseDouble(e.getDado()));
+		
+		
 		for(int i = 0; i <= num.size(); i++)
 		{
 			min = max;
@@ -72,7 +75,8 @@ public class Histograma extends PanelGenerico{
 			else break;
 			soma = 0;
 			temp.clear();
-			for(double d : BancoDeDados.valores)
+			
+			for(double d : n)
 			{
 				if(d >= min && d < max)
 				{

@@ -5,7 +5,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import model.BancoDeDados;
+import model.Dados;
 
 public class Cadastro extends PanelGenerico {
 
@@ -17,12 +17,12 @@ public class Cadastro extends PanelGenerico {
 	private int quantidade;
 	
 	public Cadastro() {
-		super();
+		super("Cadastro");
 	}
 	
 	public void inicializar() {
 				
-		quantidade = BancoDeDados.entidades.size();
+		quantidade = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size();
 		
 		lblNome = new JLabel("Nome:");
 		lblPesquisa = new JLabel("Pesquisa:");
@@ -30,8 +30,6 @@ public class Cadastro extends PanelGenerico {
 		btnAdd = new JButton("Add");
 		tfdNome = new JTextField(10);
 		cbxPesquisa = new JComboBox<String>();
-		for(String s : BancoDeDados.marcasNomes)
-			cbxPesquisa.addItem(s);
 		
 		add(lblNome);
 		add(tfdNome);
@@ -42,6 +40,16 @@ public class Cadastro extends PanelGenerico {
 		
 	}
 
+	public void atualizar() {
+		quantidade = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size();
+		lblQuantidade.setText("Quantidade: "+quantidade);
+
+		cbxPesquisa.removeAllItems();
+
+		for(String s: Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos())
+			cbxPesquisa.addItem(s);
+	}
+	
 	//metodos de acesso
 	public JLabel getLblQuantidade() {
 		return lblQuantidade;

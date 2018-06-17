@@ -2,11 +2,17 @@ package view;
 
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public abstract class PanelGenerico extends JPanel {
+import model.Oberservador;
 
-	public PanelGenerico() {
+public abstract class PanelGenerico extends JPanel implements Oberservador {
+
+	public PanelGenerico(String borda) {
+		
+		setBorder(BorderFactory.createTitledBorder(borda));
+		
 		inicializar();
 		configurar();
 	}

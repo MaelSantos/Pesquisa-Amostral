@@ -14,19 +14,19 @@ public class Qualitativo extends FrameGenerico {
 	private JMenuBar mnbMenu;
 	private JMenuItem mniAdd, mniVisualizar, mniSair, mniMarcas, mniGraficos;
 	
-	public Qualitativo(Cadastro cadastro, Visualizador visualizador, Marcas marcas, Graficos graficos) {
+	public Qualitativo() {
 		super();
-		this.cadastro = cadastro;
-		this.visualizador = visualizador;
-		this.marcas = marcas;
-		this.graficos = graficos;
 		
-		inicializar();
 	}
 
 	@Override
 	public void inicializar() {
 			
+		this.cadastro = new Cadastro();
+		this.visualizador = new Visualizador();
+		this.marcas = new Marcas();
+		this.graficos = new Graficos();
+		
 		mnbMenu = new JMenuBar();
 		
 		mniAdd = new JMenuItem("Adicionar Entidade");
@@ -77,6 +77,22 @@ public class Qualitativo extends FrameGenerico {
 
 	public JMenuItem getMniGraficos() {
 		return mniGraficos;
+	}
+
+	public Cadastro getCadastro() {
+		return cadastro;
+	}
+
+	public Visualizador getVisualizador() {
+		return visualizador;
+	}
+
+	public Marcas getMarcas() {
+		return marcas;
+	}
+
+	public Graficos getGraficos() {
+		return graficos;
 	}
 	
 }

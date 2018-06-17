@@ -5,14 +5,14 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import model.BancoDeDados;
+import model.Dados;
 import model.Entidade;
 
 public class TableModel extends AbstractTableModel{
 
     private ArrayList<Entidade> entidades;
     private String[] colunas = new String[]{  
-       "Nome","Marca"};
+       "Nome","Pesquisa"};
    
    /** Creates a new instance of DevmediaTableModel */
    public TableModel(ArrayList<Entidade> usuarios) {
@@ -45,7 +45,7 @@ public class TableModel extends AbstractTableModel{
        Entidade usuario = entidades.get(rowIndex);
        
        usuario.setNome(aValue.getNome());
-       usuario.setMarca(aValue.getMarca());        
+       usuario.setDado(aValue.getDado());        
        usuario.setIndice(aValue.getIndice());
  
        fireTableCellUpdated(rowIndex, 0);  
@@ -62,7 +62,7 @@ public class TableModel extends AbstractTableModel{
      case 0:  
     	 usuario.setNome(aValue.toString());             
      case 1:  
-    	 usuario.setMarca(aValue.toString());             
+    	 usuario.setDado(aValue.toString());             
      case 2:  
     	 usuario.setIndice(Integer.parseInt(aValue.toString()));
 
@@ -78,7 +78,7 @@ public class TableModel extends AbstractTableModel{
        String valueObject = null;
        switch(columnIndex){
        case 0: valueObject = usuarioSelecionado.getNome(); break;
-       case 1: valueObject = usuarioSelecionado.getMarca(); break;
+       case 1: valueObject = usuarioSelecionado.getDado(); break;
        case 2: valueObject = usuarioSelecionado.getIndice()+""; break;
        default: System.err.println("Índice inválido para propriedade do bean Usuario.class");
        }
@@ -115,13 +115,13 @@ public class TableModel extends AbstractTableModel{
    public void addListaDeUsuarios(ArrayList<Entidade> novosUsuarios) {  
        
        int tamanhoAntigo = getRowCount();
-       entidades = BancoDeDados.concatenarListas(entidades, novosUsuarios);
-//       entidades.addAll(novosUsuarios);    
+       entidades = Dados.getInstance().concatenarListas(entidades, novosUsuarios);
+//       entidades.addAll(novosUsuarios);
        fireTableRowsInserted(tamanhoAntigo, getRowCount() - 1);  
-   }  
+   }
    
    public void limpar() {  
-       entidades.clear();    
+       entidades.clear();
        fireTableDataChanged();  
    }  
  

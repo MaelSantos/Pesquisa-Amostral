@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.text.MaskFormatter;
 
-import model.BancoDeDados;
+import model.Dados;
 import model.Entidade;
 
 public class Visualizador extends PanelGenerico {
@@ -29,7 +29,7 @@ public class Visualizador extends PanelGenerico {
 	private JComboBox<String> cbxAmostras;
 	
 	public Visualizador() {
-		super();
+		super("Vizualizar");
 		setLayout(new FlowLayout(100,5,0));
 	}
 
@@ -50,11 +50,11 @@ public class Visualizador extends PanelGenerico {
 		ftxtPorcentagem.setText("40");
 		
 		lblPorcentagem = new JLabel("Porcentagem: ");
-		lblTitulo = new JLabel(BancoDeDados.titulo); 
-		lblQuantidade = new JLabel("Quantidade: "+BancoDeDados.entidades.size());
+		lblTitulo = new JLabel(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo()); 
+		lblQuantidade = new JLabel("Quantidade: "+Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size());
 		
 		tbmAmostra = new TableModel();
-		tbmPopulacao = new TableModel(BancoDeDados.entidades);
+		tbmPopulacao = new TableModel(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
 		tblPopulacao = new JTable(tbmPopulacao);
 		tblAmostra = new JTable(tbmAmostra);
 		tblAmostra.setPreferredScrollableViewportSize(new Dimension(230, 300));
@@ -82,6 +82,15 @@ public class Visualizador extends PanelGenerico {
 
 	}
 
+	public void atualizar() {
+		
+		lblTitulo.setText(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo()); 
+		lblQuantidade.setText("Quantidade: "+Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size());
+		
+		tbmPopulacao.addListaDeUsuarios(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
+
+	}
+	
 	//metodos de acesso
 	public JButton getBtnAmostra() {
 		return btnAmostra;

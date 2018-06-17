@@ -1,16 +1,13 @@
 package view;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import model.BancoDeDados;
+import model.Dados;
 import model.Calculo;
 import model.Entidade;
 
@@ -21,25 +18,24 @@ public class Marcas extends PanelGenerico{
 	private JScrollPane scpMarcas;
 	private JLabel lblTitulo, lblMedia, lblModa, lblMediana, lblQuartil, lblPercentil;
 	
+	public Marcas() {
+		super("Marcas");
+	}
+	
 	@Override
 	public void inicializar() {
 						
-		Calculo.organizarLista(Arrays.asList(BancoDeDados.marcasNomes), 1);
+		Calculo.organizarLista((Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos()), 1);
 		
-		ArrayList<String> nomeMarcas = new ArrayList<String>();
-		for(String s: BancoDeDados.marcasNomes)
-			nomeMarcas.add(s);
-		
-		Calculo.organizarLista(nomeMarcas, 1);
-		model = new TableModelMarcas(nomeMarcas);
+		model = new TableModelMarcas((Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos()));
 		marcas = new JTable(model);
-		marcas.setPreferredScrollableViewportSize(new Dimension(FrameGenerico.LARGURA-40, (int) (nomeMarcas.size()*16.25)));
+//		marcas.setPreferredScrollableViewportSize(new Dimension(FrameGenerico.LARGURA-40, 100)));
 		marcas.setShowHorizontalLines(false);
 		marcas.setShowVerticalLines(false);
 		
 		scpMarcas = new JScrollPane(marcas);
 		
-		lblTitulo = new JLabel(BancoDeDados.titulo);
+		lblTitulo = new JLabel(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo());
 		lblMedia = new JLabel("Media: "+Calculo.media());
 		lblModa = new JLabel("Moda: "+Calculo.moda());
 		lblMediana = new JLabel("Mediana: "+Calculo.mediana());
@@ -57,12 +53,15 @@ public class Marcas extends PanelGenerico{
 	
 	public void atualizar()
 	{
+		lblTitulo.setText(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo());
+		
 		lblMedia.setText("Media: "+Calculo.media());
 		lblModa.setText("Moda: "+Calculo.moda());
 		lblMediana.setText("Mediana: "+Calculo.mediana());	
 		lblQuartil.setText("Quatil: "+Calculo.quartil());
 		lblPercentil.setText("Percentil: "+Calculo.percentil(10));
 		
+		model.nomesPesquisa = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos();
 		Calculo.organizarLista(model.getNomeMarcas(), 1);
 	}
 	
@@ -76,13 +75,15 @@ public class Marcas extends PanelGenerico{
 
 	public class TableModelMarcas extends AbstractTableModel
 	{
-		private ArrayList<String> nomeMarcas; 
+		private ArrayList<String> nomesPesquisa; 
 	    private String[] colunas = new String[]{ 
-	       "Marca", "Quantidade", "Frequencia Acumulada"};
+	       "Pesquisa", "Quantidade", "Frequencia Acumulada"};
 	   
 	   /** Creates a new instance of DevmediaTableModel */
 	   public TableModelMarcas(ArrayList<String> usuarios) {
-	       this.nomeMarcas = usuarios;
+	       this.nomesPesquisa = usuarios;
+	       
+	       Calculo.organizarLista(nomesPesquisa, 1);
 	   }
 	   
 	   public TableModelMarcas() {
@@ -90,7 +91,7 @@ public class Marcas extends PanelGenerico{
 	}
 	  
 	   public int getRowCount() {
-	       return nomeMarcas.size();
+	       return nomesPesquisa.size();
 	   }
 
 	   public int getColumnCount() {
@@ -110,7 +111,7 @@ public class Marcas extends PanelGenerico{
 	   @Override  
 	   public void setValueAt(Object aValue, int rowIndex, int columnIndex) {  
 		   
-	    String usuario = nomeMarcas.get(rowIndex);
+	    String usuario = nomesPesquisa.get(rowIndex);
 	 
 	     switch (columnIndex) 
 	     {
@@ -128,19 +129,19 @@ public class Marcas extends PanelGenerico{
 	    }      
 	   
 	   public Object getValueAt(int rowIndex, int columnIndex) {
-		   String usuarioSelecionado = nomeMarcas.get(rowIndex);
+		   String usuarioSelecionado = nomesPesquisa.get(rowIndex);
 	       String valueObject = null;
 	       switch(columnIndex){
 	       case 0: valueObject = usuarioSelecionado; break;
 	       case 1:
 	    	   int quant = 0;
-	    	   for(Entidade e : BancoDeDados.entidades)
-	    		   if(e.getMarca().equalsIgnoreCase(usuarioSelecionado))
+	    	   for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())
+	    		   if(e.getDado().equalsIgnoreCase(usuarioSelecionado))
 	    			   quant += 1;
 	    	   valueObject = quant+""; break;
 	       case 2: 
 	    	   int soma = Integer.parseInt((String) getValueAt(rowIndex, 1));
-	    	   if(rowIndex-1 < nomeMarcas.size() && rowIndex != 0 && columnIndex != 1)
+	    	   if(rowIndex-1 < nomesPesquisa.size() && rowIndex != 0 && columnIndex != 1)
 	    	   {
 	    		   soma += Integer.parseInt((String) getValueAt(rowIndex-1, 2));
 	    	   }
@@ -159,7 +160,7 @@ public class Marcas extends PanelGenerico{
 	   }
 
 	public ArrayList<String> getNomeMarcas() {
-		return nomeMarcas;
+		return nomesPesquisa;
 	}
 	   
 	}

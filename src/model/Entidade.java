@@ -6,12 +6,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class Entidade {
 
 	private String nome;
-	private String marca;
+	private String dado;
 	private int indice;
 	
-	public Entidade(String nome, String marca, int indice) {
+	public Entidade(String nome, String dado, int indice) {
 		this.nome = nome;
-		this.marca = marca;
+		this.dado = dado;
 		this.indice = indice;
 	}
 
@@ -41,17 +41,18 @@ public class Entidade {
 		this.indice = indice;
 	}
 
-	public String getMarca() {
-		return marca;
+	public String getDado() {
+		return dado;
 	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
+	
+	public void setDado(String dado) {
+		this.dado = dado;
 	}
 
 	@Override
 	public String toString() {
-		return "Entidade [nome=" + nome + ", marca=" + marca + ", indice=" + indice + "]";
+		return "Entidade [nome = " + nome + ", dado = " + dado + ", indice = "+ indice + "]";
 	}
+
 	
 }

@@ -10,15 +10,15 @@ public class Quantitativo extends FrameGenerico {
 	private Tabela tabela;
 	private Histograma histograma;
 	
-	public Quantitativo(Tabela tabela, Histograma histograma) {
+	public Quantitativo() {
 		super();
-		this.tabela = tabela;
-		this.histograma = histograma;
-		inicializar();
 	}
 	
 	@Override
 	public void inicializar() {
+		
+		this.tabela = new Tabela();
+		this.histograma = new Histograma();
 		
 		mnbMenu = new JMenuBar();
 		
@@ -50,6 +50,18 @@ public class Quantitativo extends FrameGenerico {
 
 	public JMenuItem getMniSair() {
 		return mniSair;
+	}
+
+	public JMenuBar getMnbMenu() {
+		return mnbMenu;
+	}
+
+	public Tabela getTabela() {
+		return tabela;
+	}
+
+	public Histograma getHistograma() {
+		return histograma;
 	}
 
 }
