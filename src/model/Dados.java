@@ -52,8 +52,8 @@ public class Dados{
 	{	
 		pesquisas.add(new Pesquisa(titulo, nomePesquisa, tipo, pesquisas.size(), escolhas, new ArrayList<Entidade>()));
 		Salvar(pesquisas, "res/pesquisas.xml");
-	
-		pesquisaAtual = pesquisas.size()-1;
+		
+//		pesquisaAtual = pesquisas.size()-1;
 		nomesPesquisas.add(nomePesquisa);
 	
 	}

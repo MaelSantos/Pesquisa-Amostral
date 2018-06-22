@@ -53,13 +53,9 @@ public class ControleQuantitativo extends Controle{
 		{
 			Entidade entidade = new Entidade("", 
 					quantitativo.getTabela().getTfdAdd().getText().trim(), 
-					Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getIndice()+1);
+					quantitativo.getTabela().getPesquisa().getEntidades().size());
 			
 			Dados.getInstance().addDado(entidade,"res/pesquisas.xml");
-			quantitativo.getTabela().getTxaDados().setText(
-					Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().toString());
-			
-			quantitativo.getTabela().getModel().addUsuario(entidade);
 			quantitativo.getTabela().atualizar();
 			quantitativo.getHistograma().atualizar();
 		}
@@ -74,6 +70,5 @@ public class ControleQuantitativo extends Controle{
 	public Quantitativo getQuantitativo() {
 		return quantitativo;
 	}
-	
 	
 }

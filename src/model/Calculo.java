@@ -97,9 +97,9 @@ public class Calculo {
 			}
 			if(quant == mo)
 			{
-				if(! (moda.equalsIgnoreCase(d+"")) )
-					moda += ","+d;
-				else
+//				if(! (moda.equalsIgnoreCase(d+"")) )
+//					moda += d+" ";
+//				else
 					moda = d+"";
 			}
 			if(quant > mo)
@@ -124,25 +124,25 @@ public class Calculo {
 		int mediana = 0;
 		mediana = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/2;
 
-//		if(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size() %2 == 0)
-//			if(! (nomes.get(mediana-1).equalsIgnoreCase(nomes.get(mediana))) )
-//				return nomes.get(mediana-1) +" e "+ nomes.get(mediana);
-//			else
-//				return nomes.get(mediana-1);
-//		else
-//			return nomes.get(mediana);
-		return "";
+		if(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size() %2 == 0)
+			if(! (nomes.get(mediana-1).equalsIgnoreCase(nomes.get(mediana))) )
+				return nomes.get(mediana-1) +" e "+ nomes.get(mediana);
+			else
+				return nomes.get(mediana-1);
+		else
+			return nomes.get(mediana);
 	}
 	
 	public static String mediana(ArrayList<Entidade> list)
 	{
-//		Collections.sort(list);
 		
 		ArrayList<Double> num = new ArrayList<Double>();
 		for(Entidade e : list)
 		{
 			num.add(Double.parseDouble(e.getDado()));
 		}
+		
+		Collections.sort(num);
 		
 		int mediana = 0;
 		mediana = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/2;
@@ -177,24 +177,27 @@ public class Calculo {
 		int inicio = (int) Math.round( ( (double)(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/4)) ); 
 		int quartil = inicio;
 
-//		for(int i = 0; i < temp.size(); i++)
-//		{
-//			if(temp.get(quartil-1) != null)
-//			{
-//				nomes.add(temp.get(quartil-1));			
-//				quartil += inicio;
-//			}
-//			if(quartil > temp.size())
-//				break;
-//		}
-			return nomes;
+		System.out.println(quartil);
+		for(int i = 0; i < temp.size(); i++)
+		{
+			if(quartil-1 >= 0)
+			{
+				if(temp.get(quartil-1) != null)
+				{
+					nomes.add(temp.get(quartil-1));			
+					quartil += inicio;
+				}
+				if(quartil > temp.size())
+					break;				
+			}
+		}
+		return nomes;
 	}
 
 	public static ArrayList<String> quartil(ArrayList<Entidade> list)
 	{
 		ArrayList<String> temp = new ArrayList<String>();
 	
-//		Collections.sort(list);
 	
 		ArrayList<Double> num = new ArrayList<Double>();
 		for(Entidade e : list)
@@ -202,20 +205,22 @@ public class Calculo {
 			num.add(Double.parseDouble(e.getDado()));
 		}
 		
+		Collections.sort(num);
+		
 		int inicio = (int) Math.round( ( (double)(num.size()/4)) ); 
 		int quartil = inicio;
 		
-//		for(int i = 0; i < num.size(); i++)
-//		{
-//			if(num.get(quartil-1) != null)
-//			{
-//				temp.add(num.get(quartil-1)+"");
-//				quartil += inicio;
-//			}
-//			if(quartil > num.size())
-//				break;
-//		}
-			return temp;
+		for(int i = 0; i < 4; i++)
+		{
+			if(num.get(quartil-1) != null)
+			{
+				temp.add(num.get(quartil-1)+"");	
+				quartil += inicio;
+			}
+			if(quartil > num.size())
+				break;
+		}
+		return temp;
 	}
 	
 	public static String percentil(int percentil)
@@ -229,8 +234,7 @@ public class Calculo {
 		double p1 = ((double)(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/100)); 
 		double p = ((double)(p1 * percentil));
 
-//		return nomes.get(0);
-		return "";
+		return nomes.get(0);
 	}
 
 	public static String percentil(ArrayList<Entidade> list, int percentil)
@@ -378,10 +382,9 @@ public class Calculo {
 		int min = 0;
 		int max = classe;
 		
-		
 		ArrayList<Integer> numeros = new ArrayList<Integer>();
 		
-		while(max < list.size())
+		while(max < list.size() || list.size() == 0)
 		{
 			numeros.add(min);
 			numeros.add(max);
@@ -390,10 +393,7 @@ public class Calculo {
 			max += classe;
 		
 		}
-		
-		return numeros;
-		
+		return numeros;		
 	}
-	
 
 }

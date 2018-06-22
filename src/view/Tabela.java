@@ -2,9 +2,7 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -42,7 +40,7 @@ public class Tabela extends PanelGenerico {
 
 		btnAdd = new JButton("Add");
 		tfdAdd = new JTextField(10);
-		txaDados = new JTextArea(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().toString());
+		txaDados = new JTextArea();
 
 		scpPanel = new JScrollPane(tabela);
 
@@ -69,21 +67,30 @@ public class Tabela extends PanelGenerico {
 
 	public void atualizar()
 	{
-		lblTotal.setText("Total: "+Calculo.total(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades()));
-		lblMedia.setText("Media: "+Calculo.media(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades()));
-		lblModa.setText("Moda: "+Calculo.moda(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades()));
-		lblMediana.setText("Mediana: "+Calculo.mediana(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades()));
-		lblQuartil.setText("Quatil: "+Calculo.quartil(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades()));
-		lblPercentil.setText("Percentil: "+Calculo.percentil(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades(),10));
+		pesquisa.getEntidades().clear();
+		pesquisa.getEntidades().addAll(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
+		model.setValores(pesquisa.getEntidades());
 		
-		model.limpar();
-		model.addListaDeUsuarios(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
-		model.valores = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades();
-		model.maior = Calculo.maior(model.valores);
-		model.menor = Calculo.menor(model.valores);
-		model.classe = Calculo.classes(model.valores);
-		model.num = Calculo.minmax(model.valores);
-		model.fireTableDataChanged();
+		if(!model.valores.isEmpty())
+		{
+			lblTotal.setText("Total: "+Calculo.total(pesquisa.getEntidades()));
+			lblMedia.setText("Media: "+Calculo.media(pesquisa.getEntidades()));
+			lblModa.setText("Moda: "+Calculo.moda(pesquisa.getEntidades()));
+			lblMediana.setText("Mediana: "+Calculo.mediana(pesquisa.getEntidades()));
+			lblQuartil.setText("Quatil: "+Calculo.quartil(pesquisa.getEntidades()));
+			lblPercentil.setText("Percentil: "+Calculo.percentil(pesquisa.getEntidades(),10));			
+			
+			model.maior = Calculo.maior(model.valores);
+			model.menor = Calculo.menor(model.valores);
+			model.classe = Calculo.classes(model.valores);
+			model.num = Calculo.minmax(model.valores);
+		}
+		
+		String s = "";
+		for(Entidade e : pesquisa.getEntidades())
+			s += e.getDado()+"\n";
+			txaDados.setText(s);
+		model.fireTableDataChanged();		
 	}
 
 	public class TableModel extends AbstractTableModel{
@@ -184,7 +191,7 @@ public class Tabela extends PanelGenerico {
 			fireTableCellUpdated(rowIndex, columnIndex);  
 		}      
 
-		public Object getValueAt(int rowIndex, int columnIndex) {
+		public Object getValueAt(int rowIndex, int columnIndex) throws NumberFormatException {
 			Entidade usuarioSelecionado = valores.get(rowIndex);
 			String valueObject = null;
 
@@ -320,6 +327,14 @@ public class Tabela extends PanelGenerico {
 
 		public boolean isEmpty() {  
 			return valores.isEmpty();  
+		}
+
+		public ArrayList<Entidade> getValores() {
+			return valores;
+		}
+
+		public void setValores(ArrayList<Entidade> valores) {
+			this.valores = valores;
 		}  
 
 	}

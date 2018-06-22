@@ -32,5 +32,13 @@ public abstract class PanelGenerico extends JPanel implements Oberservador {
 		
 		setVisible(false);		
 	}
+
+	public Pesquisa getPesquisa() {
+		return pesquisa;
+	}
+
+	public void setPesquisa(Pesquisa pesquisa) {
+		this.pesquisa = pesquisa;
+	}
 	
 }
