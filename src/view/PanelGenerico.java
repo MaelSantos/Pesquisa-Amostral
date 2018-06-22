@@ -6,10 +6,15 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import model.Oberservador;
+import model.Pesquisa;
 
 public abstract class PanelGenerico extends JPanel implements Oberservador {
 
+	protected Pesquisa pesquisa;
+	
 	public PanelGenerico(String borda) {
+		
+		pesquisa = new Pesquisa();
 		
 		setBorder(BorderFactory.createTitledBorder(borda));
 		

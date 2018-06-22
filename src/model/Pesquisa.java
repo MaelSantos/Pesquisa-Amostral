@@ -23,6 +23,10 @@ public class Pesquisa {
 		this.entidades = entidades;
 	}
 	
+	public Pesquisa() {
+		entidades = new ArrayList<Entidade>();
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		

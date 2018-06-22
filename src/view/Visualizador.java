@@ -27,7 +27,7 @@ public class Visualizador extends PanelGenerico {
 	private MaskFormatter mascara;
 	private JLabel lblPorcentagem, lblTitulo, lblQuantidade;
 	private JComboBox<String> cbxAmostras;
-	
+
 	public Visualizador() {
 		super("Vizualizar");
 		setLayout(new FlowLayout(100,5,0));
@@ -35,9 +35,9 @@ public class Visualizador extends PanelGenerico {
 
 	@Override
 	public void inicializar() {
-		
+
 		btnAmostra = new JButton("Tirar Amostra");
-		
+
 		mascara = new MaskFormatter();
 		mascara.setValidCharacters("1234567890");
 		try {
@@ -48,13 +48,13 @@ public class Visualizador extends PanelGenerico {
 		}
 		ftxtPorcentagem = new JFormattedTextField(mascara);
 		ftxtPorcentagem.setText("40");
-		
+
 		lblPorcentagem = new JLabel("Porcentagem: ");
-		lblTitulo = new JLabel(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo()); 
-		lblQuantidade = new JLabel("Quantidade: "+Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size());
-		
+		lblTitulo = new JLabel("Vazio"); 
+		lblQuantidade = new JLabel("Quantidade: Vazio");
+
 		tbmAmostra = new TableModel();
-		tbmPopulacao = new TableModel(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
+		tbmPopulacao = new TableModel(pesquisa.getEntidades());
 		tblPopulacao = new JTable(tbmPopulacao);
 		tblAmostra = new JTable(tbmAmostra);
 		tblAmostra.setPreferredScrollableViewportSize(new Dimension(230, 300));
@@ -65,12 +65,12 @@ public class Visualizador extends PanelGenerico {
 		tblPopulacao.setShowVerticalLines(false);
 		scpPopulacao = new JScrollPane(tblPopulacao);
 		scpAmostra = new JScrollPane(tblAmostra);
-		
+
 		cbxAmostras = new JComboBox<String>();
 		cbxAmostras.addItem("Inteiramente Aleatoria");
 		cbxAmostras.addItem("Sistematica");
 		cbxAmostras.addItem("Estratificamente Proporcional");
-		
+
 		add(lblTitulo);
 		add(lblQuantidade);
 		add(scpPopulacao);
@@ -83,14 +83,17 @@ public class Visualizador extends PanelGenerico {
 	}
 
 	public void atualizar() {
-		
+
 		lblTitulo.setText(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo()); 
 		lblQuantidade.setText("Quantidade: "+Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size());
-		
-		tbmPopulacao.addListaDeUsuarios(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
+
+		pesquisa.getEntidades().clear();
+		pesquisa.getEntidades().addAll(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
+		tbmPopulacao.setEntidades(pesquisa.getEntidades());
+
 
 	}
-	
+
 	//metodos de acesso
 	public JButton getBtnAmostra() {
 		return btnAmostra;

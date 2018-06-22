@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import model.Dados;
 import model.Entidade;
 import model.Pesquisa;
+import model.Verificar;
 import view.Mensagem;
 import view.Menu;
 
@@ -42,21 +43,28 @@ public class ControleMenu extends Controle{
 		
 		if(obj == menu.getCriar().getBtnCriar())
 		{	
-			int tipo = 2;			
-			if(menu.getCriar().getRdbQualitativo().isSelected())
-				tipo = Pesquisa.QUALITATIVO;
-			else if(menu.getCriar().getRdbQuantitativo().isSelected())
-				tipo = Pesquisa.QUANTITATIVO;
-			
-			Dados.getInstance().atualizarBanco( 
-					menu.getCriar().getTfdTitulo().getText().trim(),//titulo, 
-					menu.getCriar().getEscolhas(),//escolhas, 
-					menu.getCriar().getTfdAssunto().getText().trim(),
-					tipo); //nomePesquisa,
-			
-			notificar();
+			if(Verificar.verificarCriarPesquisa(menu.getCriar()))
+			{
+				int tipo = 2;			
+				if(menu.getCriar().getRdbQualitativo().isSelected())
+					tipo = Pesquisa.QUALITATIVO;
+				else if(menu.getCriar().getRdbQuantitativo().isSelected())
+					tipo = Pesquisa.QUANTITATIVO;
+				
+				Dados.getInstance().atualizarBanco( 
+						menu.getCriar().getTfdTitulo().getText().trim(),//titulo, 
+						menu.getCriar().getEscolhas(),//escolhas, 
+						menu.getCriar().getTfdAssunto().getText().trim(),
+						tipo); //nomePesquisa,
+				
+				notificar();
 //			ControleQualitativo.getInstance().notificar();
-//			ControleQuantitativo.getInstance().notificar();
+//			ControleQuantitativo.getInstance().notificar();	
+				
+				Mensagem.exibirMensagem("Pesquisa criada com sucesso!!!");
+			}
+			else
+				Mensagem.exibirMensagem("Preencha todos os dados nescessarios!!!");
 			
 		}
 		if(obj == menu.getCriar().getBtnVisualizar())
@@ -80,17 +88,21 @@ public class ControleMenu extends Controle{
 		}
 		if(obj == menu.getCriar().getRdbQualitativo())
 		{
-			menu.getCriar().getRdbQuantitativo().setSelected(false);
+//			menu.getCriar().getRdbQuantitativo().setSelected(false);
 			menu.getCriar().getTfdEscolhas().setVisible(true);
 			menu.getCriar().getLblEscolhas().setVisible(true);
 			menu.getCriar().getTxaEscolhas().setVisible(true);
+			menu.getCriar().getScpEscolhas().setVisible(true);
+			menu.getCriar().getBtnAddEscolha().setVisible(true);
 		}
 		if(obj == menu.getCriar().getRdbQuantitativo())
 		{
-			menu.getCriar().getRdbQualitativo().setSelected(false);
+//			menu.getCriar().getRdbQualitativo().setSelected(false);
 			menu.getCriar().getTfdEscolhas().setVisible(false);
 			menu.getCriar().getLblEscolhas().setVisible(false);
 			menu.getCriar().getTxaEscolhas().setVisible(false);
+			menu.getCriar().getScpEscolhas().setVisible(false);
+			menu.getCriar().getBtnAddEscolha().setVisible(false);
 		}
 		if(obj == menu.getCriar().getBtnAddEscolha())
 		{

@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -22,6 +23,8 @@ public class CriarPesquisa extends PanelGenerico{
 	private JButton btnCriar, btnAddEscolha, btnVisualizar, btnSair;
 	private JComboBox<String> cbxPesquisas;
 	private JRadioButton rdbQuantitativo, rdbQualitativo;
+	private ButtonGroup group;
+	private JScrollPane scpEscolhas;
 	
 	private ArrayList<String> escolhas;
 	private JTextArea txaEscolhas;
@@ -54,10 +57,15 @@ public class CriarPesquisa extends PanelGenerico{
 		
 		rdbQuantitativo = new JRadioButton("Quantitativo");
 		rdbQualitativo = new JRadioButton("Qualitativo");
-				
+		group = new ButtonGroup();
+		group.add(rdbQualitativo);
+		group.add(rdbQuantitativo);
+		
 		cbxPesquisas = new JComboBox<String>();
 		for(String s : Dados.getInstance().getNomesPesquisas())
 			cbxPesquisas.addItem(s);
+		
+		scpEscolhas = new JScrollPane(txaEscolhas);
 		
 		btnCriar = new JButton("Criar Pesquisa");
 		btnVisualizar = new JButton("Visualizar");
@@ -77,7 +85,7 @@ public class CriarPesquisa extends PanelGenerico{
 		add(rdbQualitativo);
 		add(rdbQuantitativo);
 		
-		add(new JScrollPane(txaEscolhas));
+		add(scpEscolhas);
 		
 		add(btnCriar);
 		
@@ -158,6 +166,10 @@ public class CriarPesquisa extends PanelGenerico{
 
 	public JButton getBtnAddEscolha() {
 		return btnAddEscolha;
+	}
+
+	public JScrollPane getScpEscolhas() {
+		return scpEscolhas;
 	}
 
 }
