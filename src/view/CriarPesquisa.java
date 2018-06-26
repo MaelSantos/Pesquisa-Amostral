@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -36,7 +37,7 @@ public class CriarPesquisa extends PanelGenerico{
 		f.setHgap(10);
 		f.setVgap(10);
 		
-		setLayout(f);
+		setLayout(new GridLayout(10, 3));
 		setVisible(true);
 	}
 
@@ -80,14 +81,18 @@ public class CriarPesquisa extends PanelGenerico{
 		
 		add(lblEscolhas);
 		add(tfdEscolhas);
-		add(btnAddEscolha);
 		
 		add(rdbQualitativo);
 		add(rdbQuantitativo);
 		
 		add(scpEscolhas);
+		add(btnAddEscolha);
 		
+		add(new JSeparator());
 		add(btnCriar);
+		
+		add(new JLabel("Visualizar:"));
+		add(new JSeparator());
 		
 		add(cbxPesquisas);
 		add(btnVisualizar);

@@ -90,6 +90,11 @@
         <dado>4</dado>
         <indice>7</indice>
       </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>4</dado>
+        <indice>8</indice>
+      </Entidade>
     </entidades>
   </Pesquisa>
 </list>

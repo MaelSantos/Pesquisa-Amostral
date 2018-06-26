@@ -99,7 +99,16 @@ public class Histograma extends PanelGenerico{
 
 				System.out.println(min+"-"+max);
 				if(!temp.isEmpty())
-					dataset.addSeries(min+"-"+max, dados, 1, (double) min, (double ) max);
+				{
+					if(i < dataset.getSeriesCount() && dataset.getSeriesCount() > 0)
+					{
+						if(dataset.getSeriesKey(i) != min+"-"+max)
+							dataset.addSeries(min+"-"+max, dados, 1, (double) min, (double ) max);
+					}
+					else if(dataset.getSeriesCount() == 0)
+						dataset.addSeries(min+"-"+max, dados, 1, (double) min, (double ) max);					
+				}
+	
 			}
 		}
 	}
