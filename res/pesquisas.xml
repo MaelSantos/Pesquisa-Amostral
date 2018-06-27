@@ -7,21 +7,181 @@
     <tipo>0</tipo>
     <indice>0</indice>
     <tipos>
-      <tipo>Outros</tipo>
-      <tipo>LG</tipo>
-      <tipo>IPhone</tipo>
-      <tipo>Motorola</tipo>
       <tipo>Samsung</tipo>
+      <tipo>LG</tipo>
+      <tipo>Outros</tipo>
+      <tipo>Motorola</tipo>
+      <tipo>IPhone</tipo>
       <tipo>ASUS</tipo>
-      <tipo>BLU</tipo>
       <tipo>Lenovo</tipo>
       <tipo>Sony</tipo>
+      <tipo>BLU</tipo>
     </tipos>
     <entidades>
       <Entidade>
         <nome>Socorrinha</nome>
         <dado>Outros</dado>
         <indice>5</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Clarice</nome>
+        <dado>Motorola</dado>
+        <indice>2</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Marcia Rejane</nome>
+        <dado>Samsung</dado>
+        <indice>3</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Bruno</nome>
+        <dado>IPhone</dado>
+        <indice>4</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Ayrton</nome>
+        <dado>Motorola</dado>
+        <indice>5</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Beatriz Nunes</nome>
+        <dado>Samsung</dado>
+        <indice>6</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Wanderson</nome>
+        <dado>LG</dado>
+        <indice>7</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Marcos</nome>
+        <dado>Samsung</dado>
+        <indice>8</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Vinicius</nome>
+        <dado>Outros</dado>
+        <indice>9</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Andrea</nome>
+        <dado>Samsung</dado>
+        <indice>10</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Andre Felipe</nome>
+        <dado>Motorola</dado>
+        <indice>11</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Dayla</nome>
+        <dado>IPhone</dado>
+        <indice>12</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Diogo</nome>
+        <dado>ASUS</dado>
+        <indice>13</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Marcelo Paiva</nome>
+        <dado>Outros</dado>
+        <indice>14</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Vinicius</nome>
+        <dado>LG</dado>
+        <indice>15</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Breno Henrique</nome>
+        <dado>LG</dado>
+        <indice>16</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Vinicius</nome>
+        <dado>LG</dado>
+        <indice>17</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Lucas Soares</nome>
+        <dado>ASUS</dado>
+        <indice>18</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Paulo Alves</nome>
+        <dado>Motorola</dado>
+        <indice>19</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Clebson Luiz</nome>
+        <dado>Samsung</dado>
+        <indice>20</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Debora Luana</nome>
+        <dado>Samsung</dado>
+        <indice>21</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Fabricia</nome>
+        <dado>Samsung</dado>
+        <indice>22</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Alex Ruan</nome>
+        <dado>Outros</dado>
+        <indice>23</indice>
+      </Entidade>
+      <Entidade>
+        <nome>I ate your mother</nome>
+        <dado>Lenovo</dado>
+        <indice>24</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Lucas</nome>
+        <dado>LG</dado>
+        <indice>25</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Oliveira</nome>
+        <dado>LG</dado>
+        <indice>26</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Erick</nome>
+        <dado>Samsung</dado>
+        <indice>27</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Samuel Araujo</nome>
+        <dado>Samsung</dado>
+        <indice>28</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Matheus Honorio</nome>
+        <dado>Outros</dado>
+        <indice>29</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Felipe</nome>
+        <dado>Samsung</dado>
+        <indice>30</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Alison</nome>
+        <dado>Sony</dado>
+        <indice>31</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Daniela</nome>
+        <dado>LG</dado>
+        <indice>32</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Rildo</nome>
+        <dado>BLU</dado>
+        <indice>33</indice>
       </Entidade>
     </entidades>
   </Pesquisa>
@@ -94,6 +254,11 @@
         <nome/>
         <dado>4</dado>
         <indice>8</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>5</dado>
+        <indice>9</indice>
       </Entidade>
     </entidades>
   </Pesquisa>

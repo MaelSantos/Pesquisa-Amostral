@@ -6,14 +6,8 @@ import java.util.ArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.DefaultXYItemRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
 
 import model.Dados;
 import model.Entidade;
@@ -55,7 +49,7 @@ public class Histograma extends PanelGenerico{
 	{
 		pesquisa.getEntidades().clear();
 		pesquisa.getEntidades().addAll(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
-		
+
 		if(!pesquisa.getEntidades().isEmpty())
 		{
 			ArrayList<Integer> num = Calculo.minmax(pesquisa.getEntidades());	
@@ -69,7 +63,6 @@ public class Histograma extends PanelGenerico{
 			for(Entidade e : pesquisa.getEntidades())
 				n.add(Double.parseDouble(e.getDado()));
 
-			System.out.println(num);
 			for(int i = 0; i <= num.size(); i++)
 			{
 				min = max;
@@ -88,28 +81,21 @@ public class Histograma extends PanelGenerico{
 							temp.add(1.0);
 					}
 				}
-				
-				System.out.println(num);
-				
+
 				double[] dados = new double[temp.size()];
 				for(int j = 0; j < dados.length; j++)
 				{
 					dados[j] = temp.get(j);
 				}
 
-				System.out.println(min+"-"+max);
 				if(!temp.isEmpty())
-				{
-					if(i < dataset.getSeriesCount() && dataset.getSeriesCount() > 0)
-					{
-						if(dataset.getSeriesKey(i) != min+"-"+max)
-							dataset.addSeries(min+"-"+max, dados, 1, (double) min, (double ) max);
-					}
-					else if(dataset.getSeriesCount() == 0)
-						dataset.addSeries(min+"-"+max, dados, 1, (double) min, (double ) max);					
-				}
-	
+					dataset.addSeries(min+"-"+max, dados, 1, (double) min, (double ) max);
 			}
 		}
+		for(int k = 0; k < dataset.getSeriesCount(); k++)
+		{
+			System.out.println(dataset.getSeriesKey(k));							
+		}
+
 	}
 }

@@ -231,10 +231,14 @@ public class Calculo {
 				nomes.add(e.getDado());//add todos as marcas de minha populaçao
 		
 		organizarLista(nomes, -1);
-		double p1 = ((double)(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/100)); 
+		double p1 = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size();
+		p1 = p1/100;
 		double p = ((double)(p1 * percentil));
-
-		return nomes.get(0);
+		
+		if(p-1 < 0)
+			return nomes.get(0);
+		else
+			return nomes.get((int) p-1);
 	}
 
 	public static String percentil(ArrayList<Entidade> list, int percentil)
@@ -250,15 +254,17 @@ public class Calculo {
 		for(Entidade e : Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())//percorro a populaçao
 				nomes.add(e.getDado());//add todos as marcas de minha populaçao
 		
-		organizarLista(nomes, -1);
-		double p1 = ((double)(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size()/100)); 
-		double p = ((double)(p1 * percentil));
-//		System.out.println(percentil);
-//		System.out.println(p1);
-//		System.out.println(p);
-//		System.out.println(nomes);
+		System.out.println(nomes);
+		Collections.sort(nomes);
 		
-		return nomes.get(0);
+		double p1 = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades().size();
+		p1 = p1/100;
+		double p = ((double)(p1 * percentil));
+		
+		if(p-1 < 0)
+			return nomes.get(0);
+		else
+			return nomes.get((int) p-1);
 	}
 
 	

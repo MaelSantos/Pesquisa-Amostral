@@ -30,6 +30,8 @@ public class ControleQualitativo extends Controle{
 		qualitativo.getMniVisualizar().addActionListener(this);
 		qualitativo.getCadastro().getBtnAdd().addActionListener(this);
 		
+		qualitativo.getVisualizador().getBtnAmostra().addActionListener(this);
+		
 	}
 	
 	public static ControleQualitativo getInstance()
@@ -50,8 +52,6 @@ public class ControleQualitativo extends Controle{
 		}
 		if(obj == qualitativo.getMniVisualizar())
 		{
-//			qualitativo.getVisualizador().getTbmPopulacao().addListaDeUsuarios(
-//					Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());		
 			mudarTela(qualitativo.getVisualizador());
 		}
 		if(obj == qualitativo.getMniMarcas())
@@ -76,8 +76,8 @@ public class ControleQualitativo extends Controle{
 					System.out.println("atualizando...");
 					qualitativo.getCadastro().setQuantidade(qualitativo.getCadastro().getQuantidade() + 1);
 					qualitativo.getCadastro().getLblQuantidade().setText("Quantidade: "+qualitativo.getCadastro().getQuantidade());
-
-					qualitativo.getVisualizador().getTbmPopulacao().fireTableDataChanged();;
+										
+					qualitativo.getVisualizador().atualizar();
 					qualitativo.getMarcas().atualizar();
 					qualitativo.getGraficos().atualizar();
 				}
@@ -85,7 +85,6 @@ public class ControleQualitativo extends Controle{
 				{
 					Mensagem.exibirMensagem("Entidade Ja Existente - Falha ao Adicionar !!!");
 				}
-				
 			}
 			else
 			{
@@ -99,8 +98,8 @@ public class ControleQualitativo extends Controle{
 				if(qualitativo.getVisualizador().getCbxAmostras().getSelectedIndex() == 0)
 				{
 					qualitativo.getVisualizador().getTbmAmostra().limpar();
-					qualitativo.getVisualizador().getTbmAmostra().addListaDeUsuarios((Amostra.AmostraAleatoria(
-							Integer.parseInt(qualitativo.getVisualizador().getFtxtPorcentagem().getText()),
+					qualitativo.getVisualizador().getTbmAmostra().addListaDeUsuarios((
+							Amostra.AmostraAleatoria(Integer.parseInt(qualitativo.getVisualizador().getFtxtPorcentagem().getText()),
 									Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())));								
 				}
 				else if(qualitativo.getVisualizador().getCbxAmostras().getSelectedIndex() == 1)
@@ -119,6 +118,8 @@ public class ControleQualitativo extends Controle{
 							Integer.parseInt(qualitativo.getVisualizador().getFtxtPorcentagem().getText()),
 							Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades())));			
 				}
+				
+				qualitativo.getVisualizador().getTbmAmostra().fireTableDataChanged();
 			}
 			else
 			{
@@ -129,11 +130,9 @@ public class ControleQualitativo extends Controle{
 		{
 			qualitativo.setVisible(false);
 			ControleMenu.getInstance().getMenu().setVisible(true);
-		}
-
-		
+		}		
 	}
-
+	
 	public Qualitativo getQualitativo() {
 		return qualitativo;
 	}

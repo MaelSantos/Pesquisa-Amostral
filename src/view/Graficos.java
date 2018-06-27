@@ -193,7 +193,7 @@ public class Graficos extends PanelGenerico {
 			
             int quant = Collections.frequency(ocorrencias, 
             		Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i));
-            System.out.println(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i)+" recebeu "+ quant+"votos ");
+//            System.out.println(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i)+" recebeu "+ quant+"votos ");
             porcent = (quant*100)/total;
             
 			dtsPie.setValue(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos().get(i), porcent);

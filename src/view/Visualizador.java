@@ -90,7 +90,7 @@ public class Visualizador extends PanelGenerico {
 		pesquisa.getEntidades().clear();
 		pesquisa.getEntidades().addAll(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
 		tbmPopulacao.setEntidades(pesquisa.getEntidades());
-
+		tbmPopulacao.fireTableDataChanged();
 
 	}
 

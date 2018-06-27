@@ -113,11 +113,10 @@ public class TableModel extends AbstractTableModel{
 
 
 	public void addListaDeUsuarios(ArrayList<Entidade> novosUsuarios) {  
-
 		int tamanhoAntigo = getRowCount();
-		if(entidades.isEmpty())
-			entidades.addAll(novosUsuarios);
-		else
+//		if(entidades.isEmpty())
+//			entidades.addAll(novosUsuarios);
+//		else
 			entidades = Dados.getInstance().concatenarListas(entidades, novosUsuarios);
 		fireTableDataChanged();
 		fireTableRowsInserted(tamanhoAntigo, getRowCount() - 1);  
