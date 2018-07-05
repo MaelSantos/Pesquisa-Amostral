@@ -15,8 +15,8 @@ public abstract class FrameGenerico extends JFrame {
 		
 		genericos = new ArrayList<PanelGenerico>();
 		
-		inicializar();
 		configurar();
+		inicializar();
 	}
 	
 	public abstract void inicializar();

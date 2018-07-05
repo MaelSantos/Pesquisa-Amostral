@@ -22,10 +22,13 @@ public class ControleMenu extends Controle{
 		menu.getCriar().getBtnCriar().addActionListener(this);
 		menu.getCriar().getBtnVisualizar().addActionListener(this);
 		menu.getCriar().getBtnAddEscolha().addActionListener(this);
-		menu.getCriar().getBtnSair().addActionListener(this);
 		
 		menu.getCriar().getRdbQualitativo().addActionListener(this);
 		menu.getCriar().getRdbQuantitativo().addActionListener(this);
+		
+		menu.getVisualizar().addActionListener(this);
+		menu.getNova().addActionListener(this);
+		menu.getSair().addActionListener(this);
 		
 	}
 	
@@ -58,6 +61,7 @@ public class ControleMenu extends Controle{
 						tipo); //nomePesquisa,
 				
 				notificar();
+				menu.getCriar().atualizar();
 //			ControleQualitativo.getInstance().notificar();
 //			ControleQuantitativo.getInstance().notificar();	
 				
@@ -88,7 +92,6 @@ public class ControleMenu extends Controle{
 		}
 		if(obj == menu.getCriar().getRdbQualitativo())
 		{
-//			menu.getCriar().getRdbQuantitativo().setSelected(false);
 			menu.getCriar().getTfdEscolhas().setVisible(true);
 			menu.getCriar().getLblEscolhas().setVisible(true);
 			menu.getCriar().getTxaEscolhas().setVisible(true);
@@ -97,12 +100,53 @@ public class ControleMenu extends Controle{
 		}
 		if(obj == menu.getCriar().getRdbQuantitativo())
 		{
-//			menu.getCriar().getRdbQualitativo().setSelected(false);
 			menu.getCriar().getTfdEscolhas().setVisible(false);
 			menu.getCriar().getLblEscolhas().setVisible(false);
 			menu.getCriar().getTxaEscolhas().setVisible(false);
 			menu.getCriar().getScpEscolhas().setVisible(false);
 			menu.getCriar().getBtnAddEscolha().setVisible(false);
+		}
+		if(obj == menu.getNova())
+		{
+			menu.getCriar().getTfdEscolhas().setVisible(true);
+			menu.getCriar().getLblEscolhas().setVisible(true);
+			menu.getCriar().getTxaEscolhas().setVisible(true);
+			menu.getCriar().getScpEscolhas().setVisible(true);
+			menu.getCriar().getBtnAddEscolha().setVisible(true);
+			menu.getCriar().getRdbQualitativo().setVisible(true);
+			menu.getCriar().getRdbQuantitativo().setVisible(true);
+			menu.getCriar().getTfdAssunto().setVisible(true);
+			menu.getCriar().getTfdEscolhas().setVisible(true);
+			menu.getCriar().getTfdTitulo().setVisible(true);
+			menu.getCriar().getLblAssunto().setVisible(true);
+			menu.getCriar().getLblEscolhas().setVisible(true);
+			menu.getCriar().getLblTitulo().setVisible(true);
+			menu.getCriar().getBtnCriar().setVisible(true);
+			
+			menu.getCriar().getLblVisualizar().setVisible(false);
+			menu.getCriar().getBtnVisualizar().setVisible(false);
+			menu.getCriar().getCbxPesquisas().setVisible(false);
+		}
+		if(obj == menu.getVisualizar())
+		{	
+			menu.getCriar().getTfdEscolhas().setVisible(false);
+			menu.getCriar().getLblEscolhas().setVisible(false);
+			menu.getCriar().getTxaEscolhas().setVisible(false);
+			menu.getCriar().getScpEscolhas().setVisible(false);
+			menu.getCriar().getBtnAddEscolha().setVisible(false);
+			menu.getCriar().getRdbQualitativo().setVisible(false);
+			menu.getCriar().getRdbQuantitativo().setVisible(false);
+			menu.getCriar().getTfdAssunto().setVisible(false);
+			menu.getCriar().getTfdEscolhas().setVisible(false);
+			menu.getCriar().getTfdTitulo().setVisible(false);
+			menu.getCriar().getLblAssunto().setVisible(false);
+			menu.getCriar().getLblEscolhas().setVisible(false);
+			menu.getCriar().getLblTitulo().setVisible(false);
+			menu.getCriar().getBtnCriar().setVisible(false);
+			
+			menu.getCriar().getLblVisualizar().setVisible(true);
+			menu.getCriar().getBtnVisualizar().setVisible(true);
+			menu.getCriar().getCbxPesquisas().setVisible(true);
 		}
 		if(obj == menu.getCriar().getBtnAddEscolha())
 		{
@@ -112,7 +156,7 @@ public class ControleMenu extends Controle{
 					+"\n"+
 					menu.getCriar().getTfdEscolhas().getText());
 		}
-		if(obj == menu.getCriar().getBtnSair())
+		if(obj == menu.getSair())
 		{
 			System.exit(0);
 		}

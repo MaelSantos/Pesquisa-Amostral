@@ -1,8 +1,12 @@
 
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,49 +19,51 @@ import view.Mensagem;
 public class Dados{
 
 	public static int pesquisaAtual;
-	
+
 	private XStream xStream;
 	private ArrayList<Pesquisa> pesquisas;
 	private ArrayList<String> nomesPesquisas;
-	
+
 	private static Dados instance;
-	
+
 	@SuppressWarnings("unchecked")
 	private Dados() {
-		
+
 		xStream = new XStream(new Dom4JDriver());
 		xStream.autodetectAnnotations(true);
 		xStream.alias("Pesquisa", Pesquisa.class);
 		xStream.alias("Entidade", Entidade.class);
 		xStream.alias("tipo", String.class);
-//		xStream.aliasField("Entidade", Entidade.class, "entidade");
-		
+		//		xStream.aliasField("Entidade", Entidade.class, "entidade");
+
 		pesquisas = (ArrayList<Pesquisa>) Carregar("res/pesquisas.xml");
 		pesquisaAtual = 0;
-		
+
 		nomesPesquisas = new ArrayList<String>();
 		for(int i = 0; i < pesquisas.size(); i++)
 		{
 			nomesPesquisas.add(pesquisas.get(i).getNome());
 		}
-		
+
 	}
 	public static Dados getInstance() {
 		if(instance == null)
 			instance = new Dados();
 		return instance;
 	}
-	
+
 	public void atualizarBanco(String titulo, ArrayList<String> escolhas, String nomePesquisa, int tipo)
 	{	
 		pesquisas.add(new Pesquisa(titulo, nomePesquisa, tipo, pesquisas.size(), escolhas, new ArrayList<Entidade>()));
 		Salvar(pesquisas, "res/pesquisas.xml");
-		
-//		pesquisaAtual = pesquisas.size()-1;
+
+		if(pesquisas.get(pesquisaAtual).getEntidades() == null)
+			pesquisas.get(pesquisaAtual).setEntidades(new ArrayList<Entidade>());
+
 		nomesPesquisas.add(nomePesquisa);
-	
+
 	}
-	
+
 	public void entrarPesquisa(String nome)
 	{
 		for(Pesquisa p : pesquisas)
@@ -69,15 +75,15 @@ public class Dados{
 				break;
 			}
 		}
-		
+
 	}
-	
+
 	public boolean addDado(Object object, String endereco) {
 
 		if (object instanceof Pesquisa) {
-			
+
 			Pesquisa pesquisa = (Pesquisa) object;
-			
+
 			if(pesquisas.isEmpty())
 			{
 				pesquisas.add(pesquisa);
@@ -93,23 +99,23 @@ public class Dados{
 						return false;
 					}
 				}
-				
+
 				pesquisas.add(pesquisa);
 				Salvar(pesquisas, endereco);
 				return true;
 			}
 		}
-		
+
 		if (object instanceof Entidade) {
 			Entidade entidade = (Entidade) object;
-			
+
 			pesquisas.get(pesquisaAtual).getEntidades().add(entidade);
 			Salvar(pesquisas, endereco);
 			return true;
 		}
-	
+
 		return false;
-		
+
 	}
 
 	public void Salvar(ArrayList<? extends Object> list, String endereco) {
@@ -126,17 +132,17 @@ public class Dados{
 				file.delete();
 				file.createNewFile();
 			}
-			
+
 			stream = new FileOutputStream(file);
-			
+
 			xStream.toXML(list, stream);
-			
-			
+
+
 		} catch (Exception e) {
-			
+
 			Mensagem.exibirMensagem("Falha Ao Salvar Xml"+e.getMessage());
 		}
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -146,20 +152,36 @@ public class Dados{
 		File file = new File(endereco);
 
 		try {
-			
+
 			if(! (file.exists()) )
 			{
 				file.createNewFile();
 			}
-	
+
 			temp = (ArrayList<? extends Object>) xStream.fromXML(file);
-			
+
 		} catch (Exception e) {
 			Mensagem.exibirMensagem("Falha Ao Carregar Xml"+e.getMessage());
 		}
 
 		return temp;
-		
+
+	}
+
+	public void buscarArquivo(String caminho) {
+		BufferedReader buffer;
+		try {
+			buffer = new BufferedReader(new FileReader(caminho));
+			String linha ;
+			while ((linha = buffer.readLine())!=null)
+			{
+				pesquisas.get(pesquisaAtual).getEntidades().add(new Entidade("", linha.trim(), pesquisas.get(pesquisaAtual).getEntidades().size()));				
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<String> getNomesPesquisas() {
@@ -177,22 +199,22 @@ public class Dados{
 	public void setPesquisas(ArrayList<Pesquisa> pesquisas) {
 		this.pesquisas = pesquisas;
 	}
-	
+
 	public ArrayList<Entidade> concatenarListas(ArrayList<Entidade> primeiraLista, 
 			ArrayList<Entidade> segundaLista) {
-		
-	    ArrayList<Entidade> ret = new ArrayList<Entidade>();
-	    for (Entidade elementoLista : primeiraLista) {
-	        if (! (ret.contains(elementoLista))) {
-	            ret.add(elementoLista);
-	        }
-	    }
-	    for (Entidade elementoLista : segundaLista) {
-	        if (! (ret.contains(elementoLista))) {
-	            ret.add(elementoLista);
-	        }
-	    }
-	    return ret;
+
+		ArrayList<Entidade> ret = new ArrayList<Entidade>();
+		for (Entidade elementoLista : primeiraLista) {
+			if (! (ret.contains(elementoLista))) {
+				ret.add(elementoLista);
+			}
+		}
+		for (Entidade elementoLista : segundaLista) {
+			if (! (ret.contains(elementoLista))) {
+				ret.add(elementoLista);
+			}
+		}
+		return ret;
 	}
-	
+
 }

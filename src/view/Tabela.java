@@ -2,9 +2,22 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -13,19 +26,25 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import model.Dados;
+import model.DadosTabelaFrequencia;
 import model.Entidade;
+import model.MedidasDeDispersao;
 import model.Calculo;
 
 public class Tabela extends PanelGenerico {
 
-	private JButton btnAdd;
+	private JButton btnAdd, btnCarregar;
 	private JTextField tfdAdd;
 	private JTextArea txaDados;
 	private JTable tabela;
 	private TableModel  model;
 	private JScrollPane scpPanel;
+	private JTextField tfdPercentil;
 	private JLabel lblTitulo, lblMedia, lblModa, lblMediana, lblQuartil, lblPercentil, lblTotal;
-
+	private JLabel lblVariancia, lblDesvio,lblCV;
+	private JButton btnPercentil;
+	private JFileChooser fcsArquivo;
+	
 	public Tabela() {
 		super("Tabelas");
 		setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
@@ -39,6 +58,7 @@ public class Tabela extends PanelGenerico {
 		tabela.setPreferredScrollableViewportSize(new Dimension(500, 143));
 
 		btnAdd = new JButton("Add");
+		btnCarregar = new JButton("Carregar Dados");
 		tfdAdd = new JTextField(10);
 		txaDados = new JTextArea();
 
@@ -50,11 +70,44 @@ public class Tabela extends PanelGenerico {
 		lblModa = new JLabel();
 		lblMediana = new JLabel();
 		lblQuartil = new JLabel();
-		lblPercentil = new JLabel();
+		lblPercentil = new JLabel("Percentil: ");
 
+		lblVariancia = new JLabel(); 
+		lblDesvio = new JLabel(); 
+		lblCV = new JLabel();
+		
+		fcsArquivo = new JFileChooser();
+		
+		tfdPercentil = new JTextField(2);
+		
+		btnPercentil = new JButton("Calcular Percentil");
+		btnPercentil.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				lblPercentil.setText("Percentil: "+Calculo.percentil(pesquisa.getEntidades(),
+						Integer.parseInt(tfdPercentil.getText().trim())));
+				
+			}
+		});;
+		
+		btnCarregar.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				int escolha = fcsArquivo.showOpenDialog(getParent());
+
+				Dados.getInstance().buscarArquivo(fcsArquivo.getSelectedFile().getAbsolutePath());
+				
+				System.out.println(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
+				
+				atualizar();
+			}
+		});
+		
 		add(lblTitulo);
 		add(btnAdd);
 		add(tfdAdd);
+		add(btnCarregar);
 		add(new JScrollPane(txaDados)).setPreferredSize(new Dimension(200, 100));;
 		add(scpPanel);
 		add(lblTotal);
@@ -62,7 +115,13 @@ public class Tabela extends PanelGenerico {
 		add(lblModa);
 		add(lblMediana);
 		add(lblQuartil);
+		add(btnPercentil);
+		add(tfdPercentil);
 		add(lblPercentil);
+		
+		add(lblVariancia);
+		add(lblDesvio);
+		add(lblCV);
 	}
 
 	public void atualizar()
@@ -71,14 +130,32 @@ public class Tabela extends PanelGenerico {
 		pesquisa.getEntidades().addAll(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
 		model.setValores(pesquisa.getEntidades());
 		
+		
 		if(!model.valores.isEmpty())
 		{
 			lblTotal.setText("Total: "+Calculo.total(pesquisa.getEntidades()));
 			lblMedia.setText("Media: "+Calculo.media(pesquisa.getEntidades()));
 			lblModa.setText("Moda: "+Calculo.moda(pesquisa.getEntidades()));
 			lblMediana.setText("Mediana: "+Calculo.mediana(pesquisa.getEntidades()));
-			lblQuartil.setText("Quatil: "+Calculo.quartil(pesquisa.getEntidades()));
-			lblPercentil.setText("Percentil: "+Calculo.percentil(pesquisa.getEntidades(),10));			
+			lblQuartil.setText("Quatil: "+Calculo.quartil(pesquisa.getEntidades()));			
+			
+			ArrayList<String> list = new ArrayList<String>();
+			
+			for(Entidade e : pesquisa.getEntidades())
+				list.add(e.getDado());
+			
+			String[] temp = new String[list.size()];
+			
+			DadosTabelaFrequencia.frequencia(list.toArray(temp));
+			DadosTabelaFrequencia.Xi(list.toArray(temp));
+			DadosTabelaFrequencia.XiFi();
+			DadosTabelaFrequencia.frequenciaRelativa(pesquisa.getEntidades().size());
+			DadosTabelaFrequencia.FrequenciaRelativa();
+			DadosTabelaFrequencia.frequenciaAcumulada();
+			
+			lblVariancia.setText("Variancia: "+MedidasDeDispersao.varianciaPopulacional(list.toArray(temp))); 
+			lblDesvio.setText("Desvio: "+MedidasDeDispersao.desvioNaTabela(pesquisa.getEntidades().size()));
+			lblCV.setText("Coeficiente De Variação: "+MedidasDeDispersao.coeficienteDeVariacaoNaTabela(pesquisa.getEntidades().size()));
 			
 			model.maior = Calculo.maior(model.valores);
 			model.menor = Calculo.menor(model.valores);
@@ -112,7 +189,7 @@ public class Tabela extends PanelGenerico {
 		}
 
 		public int getRowCount() {
-			return (int) Math.round( ( (double) (1+3.33*Math.log10(valores.size()))));
+			return (int) Math.round( ( (double) (1+3.33*Math.log10(Calculo.total(valores)))));
 		}
 
 		public int getColumnCount() {
@@ -191,6 +268,22 @@ public class Tabela extends PanelGenerico {
 			fireTableCellUpdated(rowIndex, columnIndex);  
 		}      
 
+		public void gerarMinMax(String linha)
+		{
+			linha = linha.replace(" ", "");
+			System.out.println("Classe: "+linha);
+			
+			if(linha != null)
+			{
+				StringTokenizer token = new StringTokenizer(linha, "-");
+				
+				while(token.hasMoreElements()){
+					min = Integer.parseInt(token.nextToken());
+					max = min + classe;
+				}
+			}
+		}
+		
 		public Object getValueAt(int rowIndex, int columnIndex) throws NumberFormatException {
 			Entidade usuarioSelecionado = valores.get(rowIndex);
 			String valueObject = null;
@@ -198,9 +291,24 @@ public class Tabela extends PanelGenerico {
 			switch(columnIndex){
 			case 0:    
 				if(rowIndex-1 >= 0 && rowIndex != 0)
-				{
-					min = Integer.parseInt(((String)(getValueAt(rowIndex-1, 0))).substring(4).trim());
-					max = min+classe;
+				{					
+//					String linha = ((String)(getValueAt(rowIndex-1, 0)));
+//					linha = linha.replace(" ", "");
+//					System.out.println("Classe: "+linha);
+//					
+//					if(linha != null)
+//					{
+//						StringTokenizer token = new StringTokenizer(linha, "-");
+//						
+//						while(token.hasMoreElements()){
+//							min = Integer.parseInt(token.nextToken());
+//							max = min + classe;
+//						}
+//					}
+//					min = Integer.parseInt(((String)(getValueAt(rowIndex-1, 0))).substring(4).trim());
+//					max = min+classe;
+					
+					gerarMinMax(((String)(getValueAt(rowIndex-1, 0))));
 				}
 				else
 				{
@@ -216,8 +324,9 @@ public class Tabela extends PanelGenerico {
 				{
 					if(rowIndex-1 >= 0 && rowIndex != 0)
 					{
-						min = Integer.parseInt(((String)(getValueAt(rowIndex-1, 0))).substring(4).trim());
-						max = classe+min;
+						gerarMinMax(((String)(getValueAt(rowIndex-1, 0))));
+//						min = Integer.parseInt(((String)(getValueAt(rowIndex-1, 0))).substring(4).trim());
+//						max = classe+min;
 					}
 					if(Double.parseDouble(e.getDado()) >= min && Double.parseDouble(e.getDado()) < max)
 						valor++;
@@ -283,7 +392,7 @@ public class Tabela extends PanelGenerico {
 			}
 
 			return valueObject;
-		}
+		}		
 
 		@Override  
 		public boolean isCellEditable(int rowIndex, int columnIndex) {  
@@ -336,8 +445,8 @@ public class Tabela extends PanelGenerico {
 		public void setValores(ArrayList<Entidade> valores) {
 			this.valores = valores;
 		}  
-
-	}
+		
+}
 
 	public JButton getBtnAdd() {
 		return btnAdd;

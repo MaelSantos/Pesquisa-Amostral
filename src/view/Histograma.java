@@ -47,6 +47,8 @@ public class Histograma extends PanelGenerico{
 
 	public void atualizar()
 	{
+		dataset = new HistogramDataset();
+		
 		pesquisa.getEntidades().clear();
 		pesquisa.getEntidades().addAll(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
 
@@ -97,5 +99,17 @@ public class Histograma extends PanelGenerico{
 			System.out.println(dataset.getSeriesKey(k));							
 		}
 
+		histograma = ChartFactory.createHistogram(
+				"Dados Qualitativos", 
+				"Classes",
+				"Frequencia",
+				dataset, 
+				PlotOrientation.VERTICAL,
+				true, 
+				true, 
+				true);
+
+		panel.setChart(histograma);
+		
 	}
 }

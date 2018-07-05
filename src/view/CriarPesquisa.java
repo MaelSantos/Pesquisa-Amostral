@@ -1,17 +1,19 @@
 package view;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -20,8 +22,8 @@ import model.Dados;
 public class CriarPesquisa extends PanelGenerico{
 
 	private JTextField tfdTitulo, tfdAssunto, tfdEscolhas;
-	private JLabel lblTitulo, lblAssunto, lblEscolhas;
-	private JButton btnCriar, btnAddEscolha, btnVisualizar, btnSair;
+	private JLabel lblTitulo, lblAssunto, lblEscolhas, lblVisualizar;
+	private JButton btnCriar, btnAddEscolha, btnVisualizar;
 	private JComboBox<String> cbxPesquisas;
 	private JRadioButton rdbQuantitativo, rdbQualitativo;
 	private ButtonGroup group;
@@ -30,14 +32,12 @@ public class CriarPesquisa extends PanelGenerico{
 	private ArrayList<String> escolhas;
 	private JTextArea txaEscolhas;
 	
+	private JPanel visualizar, nova;
+	
 	public CriarPesquisa() {
-		super("Criar Pesquisa");
-		
-		FlowLayout f = new FlowLayout();
-		f.setHgap(10);
-		f.setVgap(10);
-		
-		setLayout(new GridLayout(10, 3));
+		super("Pesquisa");
+	
+//		setLayout(new GridLayout(10, 3));
 		setVisible(true);
 	}
 
@@ -55,6 +55,8 @@ public class CriarPesquisa extends PanelGenerico{
 		lblTitulo = new JLabel("Titulo"); 
 		lblAssunto = new JLabel("Assunto");
 		lblEscolhas = new JLabel("Escolhas");
+		lblVisualizar = new JLabel("Visualizar:");
+		lblVisualizar.setVisible(false);
 		
 		rdbQuantitativo = new JRadioButton("Quantitativo");
 		rdbQualitativo = new JRadioButton("Qualitativo");
@@ -65,39 +67,71 @@ public class CriarPesquisa extends PanelGenerico{
 		cbxPesquisas = new JComboBox<String>();
 		for(String s : Dados.getInstance().getNomesPesquisas())
 			cbxPesquisas.addItem(s);
+		cbxPesquisas.setVisible(false);
 		
 		scpEscolhas = new JScrollPane(txaEscolhas);
 		
 		btnCriar = new JButton("Criar Pesquisa");
 		btnVisualizar = new JButton("Visualizar");
+		btnVisualizar.setVisible(false);
 		btnAddEscolha = new JButton("Adicionar Escolha");
-		btnSair = new JButton("Sair");
 		
-		add(lblTitulo);
-		add(tfdTitulo);
+		visualizar = new JPanel();
+		visualizar.setLayout(new GridLayout(6, 2));
 		
-		add(lblAssunto);
-		add(tfdAssunto);
+		nova = new JPanel();
+		nova.setLayout(new GridLayout(8, 2));
 		
-		add(lblEscolhas);
-		add(tfdEscolhas);
+		nova.add(lblTitulo);
+		nova.add(tfdTitulo);
 		
-		add(rdbQualitativo);
-		add(rdbQuantitativo);
+		nova.add(lblAssunto);
+		nova.add(tfdAssunto);
 		
-		add(scpEscolhas);
-		add(btnAddEscolha);
+		nova.add(rdbQualitativo);
+		nova.add(rdbQuantitativo);
 		
-		add(new JSeparator());
-		add(btnCriar);
+		nova.add(lblEscolhas);
+		nova.add(tfdEscolhas);
 		
-		add(new JLabel("Visualizar:"));
-		add(new JSeparator());
+		nova.add(scpEscolhas);
 		
-		add(cbxPesquisas);
-		add(btnVisualizar);
+		nova.add(btnAddEscolha);
 		
-		add(btnSair);
+		nova.add(new JLabel());
+		nova.add(btnCriar);
+		
+		visualizar.add(lblVisualizar);
+		visualizar.add(cbxPesquisas);
+		visualizar.add(btnVisualizar);		
+		
+//		setLayout(new BorderLayout());
+//		add(nova,BorderLayout.CENTER);
+//		add(visualizar,BorderLayout.NORTH);
+		
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints(
+				GridBagConstraints.RELATIVE, //gridx
+				GridBagConstraints.RELATIVE, //gridy
+				GridBagConstraints.RELATIVE, //gridwidth
+				GridBagConstraints.RELATIVE, //gridheight
+				0.1, //weightx
+				0.1, //weighty
+				GridBagConstraints.CENTER, //anchor
+				GridBagConstraints.HORIZONTAL, //fill
+				new Insets(0, 0, 0, 0), //insets
+				0, //ipadx
+				0); //ipady
+		
+//		nova.setBackground(Color.RED);
+//		visualizar.setBackground(Color.BLUE);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.gridheight = GridBagConstraints.REMAINDER;
+		
+		add(nova, c);
+		add(visualizar, c);
 		
 	}
 
@@ -127,10 +161,6 @@ public class CriarPesquisa extends PanelGenerico{
 
 	public JButton getBtnVisualizar() {
 		return btnVisualizar;
-	}
-
-	public JButton getBtnSair() {
-		return btnSair;
 	}
 
 	public JRadioButton getRdbQuantitativo() {
@@ -175,6 +205,10 @@ public class CriarPesquisa extends PanelGenerico{
 
 	public JScrollPane getScpEscolhas() {
 		return scpEscolhas;
+	}
+
+	public JLabel getLblVisualizar() {
+		return lblVisualizar;
 	}
 
 }

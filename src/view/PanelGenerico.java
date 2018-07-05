@@ -18,8 +18,8 @@ public abstract class PanelGenerico extends JPanel implements Oberservador {
 		
 		setBorder(BorderFactory.createTitledBorder(borda));
 		
-		inicializar();
 		configurar();
+		inicializar();
 	}
 	
 	public abstract void inicializar();

@@ -1,8 +1,11 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -10,8 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import model.Dados;
+import model.DadosTabelaFrequencia;
 import model.Calculo;
 import model.Entidade;
+import model.MedidasDeDispersao;
 
 public class Marcas extends PanelGenerico{
 
@@ -20,7 +25,8 @@ public class Marcas extends PanelGenerico{
 	private JScrollPane scpMarcas;
 	private JTextField tfdPercentil;
 	private JLabel lblTitulo, lblMedia, lblModa, lblMediana, lblQuartil, lblPercentil;
-
+//	private JLabel lblVariancia, lblDesvio,lblCV;
+	private JButton btnPercentil;
 	public Marcas() {
 		super("Marcas");
 	}
@@ -47,26 +53,57 @@ public class Marcas extends PanelGenerico{
 		lblQuartil = new JLabel("Quatil: "+Calculo.quartil());
 		lblPercentil = new JLabel("Percentil: "+Calculo.percentil(10));
 
+//		lblVariancia = new JLabel(); 
+//		lblDesvio = new JLabel(); 
+//		lblCV = new JLabel();
+		
+		btnPercentil = new JButton("Calcular Percentil");
+		btnPercentil.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				lblPercentil.setText("Percentil: "+Calculo.percentil(Integer.parseInt(tfdPercentil.getText().trim())));
+				
+			}
+		});;
+		
 		add(lblTitulo);
 		add(scpMarcas);
 		add(lblMedia);
 		add(lblModa);
 		add(lblMediana);
 		add(lblQuartil);
+		add(btnPercentil);
 		add(tfdPercentil);
 		add(lblPercentil);
+		
+//		add(lblVariancia);
+//		add(lblDesvio);
+//		add(lblCV);
 	}
 
 	public void atualizar()
 	{
+		pesquisa.getEntidades().clear();
+		pesquisa.getEntidades().addAll(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getEntidades());
+		
 		lblTitulo.setText(Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTitulo());
 
 		lblMedia.setText("Media: "+Calculo.media());
 		lblModa.setText("Moda: "+Calculo.moda());
 		lblMediana.setText("Mediana: "+Calculo.mediana());	
 		lblQuartil.setText("Quatil: "+Calculo.quartil());
-		lblPercentil.setText("Percentil: "+Calculo.percentil(10));
 
+		ArrayList<String> list = new ArrayList<String>();
+		
+		for(Entidade e : pesquisa.getEntidades())
+			list.add(e.getDado());
+		
+		String[] temp = new String[list.size()]; 
+		
+//		lblVariancia.setText("Variancia: "+MedidasDeDispersao.varianciaPopulacional(list.toArray(temp))); 
+//		lblDesvio.setText("Desvio: "+MedidasDeDispersao.desvioNaTabela(pesquisa.getEntidades().size()));
+//		lblCV.setText("Coeficiente De Variação: "+MedidasDeDispersao.coeficienteDeVariacaoNaTabela(pesquisa.getEntidades().size()));
+		
 		model.nomesPesquisa = Dados.getInstance().getPesquisas().get(Dados.pesquisaAtual).getTipos();
 		Calculo.organizarLista(model.getNomeMarcas(), 1);
 		model.fireTableDataChanged();

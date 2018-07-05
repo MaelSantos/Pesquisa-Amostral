@@ -13,8 +13,8 @@
       <tipo>Motorola</tipo>
       <tipo>IPhone</tipo>
       <tipo>ASUS</tipo>
-      <tipo>Lenovo</tipo>
       <tipo>Sony</tipo>
+      <tipo>Lenovo</tipo>
       <tipo>BLU</tipo>
     </tipos>
     <entidades>
@@ -183,6 +183,66 @@
         <dado>BLU</dado>
         <indice>33</indice>
       </Entidade>
+      <Entidade>
+        <nome>Ramon</nome>
+        <dado>LG</dado>
+        <indice>34</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Andre</nome>
+        <dado>IPhone</dado>
+        <indice>35</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Abner</nome>
+        <dado>Motorola</dado>
+        <indice>36</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Adriel</nome>
+        <dado>LG</dado>
+        <indice>37</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Aquila</nome>
+        <dado>LG</dado>
+        <indice>38</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Socorro</nome>
+        <dado>Samsung</dado>
+        <indice>39</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Iris</nome>
+        <dado>LG</dado>
+        <indice>40</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Jonatan</nome>
+        <dado>IPhone</dado>
+        <indice>41</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Lucas</nome>
+        <dado>Samsung</dado>
+        <indice>42</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Layane</nome>
+        <dado>LG</dado>
+        <indice>43</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Rita</nome>
+        <dado>Sony</dado>
+        <indice>44</indice>
+      </Entidade>
+      <Entidade>
+        <nome>Sonia</nome>
+        <dado>Samsung</dado>
+        <indice>45</indice>
+      </Entidade>
     </entidades>
   </Pesquisa>
   <Pesquisa>
@@ -259,6 +319,75 @@
         <nome/>
         <dado>5</dado>
         <indice>9</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>10</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>0.2</dado>
+        <indice>11</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>0.5</dado>
+        <indice>12</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>0.1</dado>
+        <indice>13</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>0.2</dado>
+        <indice>14</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>8</dado>
+        <indice>15</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>7</dado>
+        <indice>16</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>5</dado>
+        <indice>17</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>6</dado>
+        <indice>18</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>10</dado>
+        <indice>19</indice>
+      </Entidade>
+      <Entidade>
+        <nome/>
+        <dado>9</dado>
+        <indice>20</indice>
+      </Entidade>
+    </entidades>
+  </Pesquisa>
+  <Pesquisa>
+    <titulo>Precos De Garrafas De Vinhos</titulo>
+    <nome>Vinho</nome>
+    <tipo>1</tipo>
+    <indice>3</indice>
+    <tipos/>
+    <entidades>
+      <Entidade>
+        <nome/>
+        <dado>1</dado>
+        <indice>0</indice>
       </Entidade>
     </entidades>
   </Pesquisa>

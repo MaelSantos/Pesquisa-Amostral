@@ -207,16 +207,17 @@ public class Calculo {
 		
 		Collections.sort(num);
 		
-		int inicio = (int) Math.round( ( (double)(num.size()/4)) ); 
+		int inicio = (int) Math.round( ( (double)(num.size()/4)) );
 		int quartil = inicio;
 		
 		for(int i = 0; i < 4; i++)
 		{
-			if(num.get(quartil-1) != null)
-			{
-				temp.add(num.get(quartil-1)+"");	
-				quartil += inicio;
-			}
+			if(quartil-1 >= 0)
+				if(num.get(quartil-1) != null)
+				{
+					temp.add(num.get(quartil-1)+"");	
+					quartil += inicio;
+				}
 			if(quartil > num.size())
 				break;
 		}
@@ -267,8 +268,34 @@ public class Calculo {
 			return nomes.get((int) p-1);
 	}
 
+	public static String variancia()
+	{
+		String variancia = "";
+		
+		ArrayList<String> nomes = new ArrayList<String>();
+		for(Entidade e :Dados.getInstance().getPesquisas().get(0).getEntidades())
+			nomes.add(e.getDado());
+		
+		organizarLista(nomes, -1);
+		
+		double m = nomes.size();
+		
+		
+		double somatorio = 0.0;
+		for(int i = 0; i < Dados.getInstance().getPesquisas().get(0).getTipos().size(); i++)
+		{
+			int quant = Collections.frequency(nomes, 
+            		Dados.getInstance().getPesquisas().get(0).getTipos().get(i));
+			
+			somatorio += quant;
+		}
+		
+		somatorio = Math.pow(somatorio, 2);
+		
+		return variancia;
+	}
 	
-	private static class Compare implements Comparator<String>
+		private static class Compare implements Comparator<String>
 	{
 		int org = 0;
 		
@@ -351,15 +378,21 @@ public class Calculo {
 		double valor = 0;
 		
 		ArrayList<Double> num = new ArrayList<Double>();
-		for(Entidade e : list)
-		{
-			num.add(Double.parseDouble(e.getDado()));
+		try {
+			
+			for(Entidade e : list)
+			{				
+				num.add(Double.parseDouble(e.getDado()));	
+			}
+			
+			for(double d : num)
+				valor += d;			
+			
+			return valor;
+			
+		} catch (Exception e) {
+			return 0.0;
 		}
-		
-		for(double d : num)
-			valor += d;
-		
-		return valor;
 	}
 	
 	public static int classes(ArrayList<Entidade> list)
@@ -372,11 +405,18 @@ public class Calculo {
 			num.add(Double.parseDouble(e.getDado()));
 		}
 		
-		classes = ((double) (1 +3.33*Math.log10((double)num.size())));
+		
+		classes = ((double) (1 +3.33*Math.log10((double)total(list))));
+//		System.out.println(classes);
 		
 		double diferenca = maior(list)-menor(list);
+//		System.out.println(maior(list));
+//		System.out.println(menor(list));
+//		System.out.println(diferenca);
 		
 		classes = diferenca / classes;
+//		System.out.println(classes);
+		
 		
 		return (int) Math.round(classes);
 		
@@ -389,17 +429,26 @@ public class Calculo {
 		int max = classe;
 		
 		ArrayList<Integer> numeros = new ArrayList<Integer>();
-		
-		while(max < list.size() || list.size() == 0)
-		{
-			numeros.add(min);
-			numeros.add(max);
+
+		try {
+			while(max < list.size() || list.size() == 0)
+			{
+				numeros.add(min);
+				numeros.add(max);
+				
+				min = max;
+				max += classe;
+				
+			}
+			return numeros;		
 			
-			min = max;
-			max += classe;
-		
+		} catch (Exception e) {
+			return new ArrayList<Integer>();
 		}
-		return numeros;		
 	}
 
+	public static void main(String[] args) {
+		System.out.println(variancia());
+	}
+	
 }

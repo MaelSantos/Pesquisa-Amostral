@@ -31,7 +31,7 @@ public class Qualitativo extends FrameGenerico {
 		
 		mniAdd = new JMenuItem("Adicionar Entidade");
 		mniVisualizar = new JMenuItem("Tirar Amostras");
-		mniSair = new JMenuItem("Sair");
+		mniSair = new JMenuItem("Voltar");
 		mniMarcas = new JMenuItem("Tabela");
 		mniGraficos = new JMenuItem("Graficos");
 		

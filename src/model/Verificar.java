@@ -27,10 +27,6 @@ public class Verificar {
 		if(criar.getTfdAssunto().getText().trim().equals("") ||
 				criar.getTfdTitulo().getText().trim().equals(""))
 			return false;
-		if( criar.getRdbQualitativo().isSelected() ==
-				criar.getRdbQuantitativo().isSelected()) 
-			return false;
-
 		return true;
 	}
 

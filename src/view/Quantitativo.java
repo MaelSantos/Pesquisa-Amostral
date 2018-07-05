@@ -24,7 +24,7 @@ public class Quantitativo extends FrameGenerico {
 		
 		mniTabela = new JMenuItem("Tabela");
 		mniHistograma = new JMenuItem("Histograma");
-		mniSair = new JMenuItem("Sair");
+		mniSair = new JMenuItem("Voltar");
 		
 		mnbMenu.add(mniTabela);
 		mnbMenu.add(new JSeparator(1));
